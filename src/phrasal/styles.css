@@ -1,0 +1,139 @@
+/* Phrasal-specific styles */
+.phrasal-header {
+  padding: 28px 16px 8px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.phrasal-header h1 {
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--text);
+}
+.phrasal-header h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+.phrasal-header .subtitle {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-top: 6px;
+}
+
+.phrasal-tip {
+  background: var(--accent-bg);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.7;
+  margin: 0 16px 8px;
+  max-width: calc(1200px - 32px);
+}
+.phrasal-tip strong {
+  color: var(--accent);
+}
+
+.phrasal-controls {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 50;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  transition:
+    background var(--t),
+    border-color var(--t);
+}
+
+.phrasal-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: var(--text-2);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.phrasal-stats strong {
+  color: var(--text);
+}
+.phrasal-stats .progress-bar {
+  flex: 1;
+}
+
+/* Card */
+.phrasal-card {
+  cursor: pointer;
+}
+
+.cat-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  background: var(--surface2);
+  padding: 2px 7px;
+  border-radius: 4px;
+  display: inline-flex;
+  margin-bottom: 6px;
+}
+
+.word-main {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.word-ru {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-bottom: 10px;
+}
+
+.phrasal-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.phrasal-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  gap: 2px 8px;
+  padding: 8px 10px;
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+.ph-word {
+  grid-row: 1;
+  font-weight: 700;
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+}
+.ph-meaning {
+  grid-row: 1;
+  color: var(--text-2);
+}
+.ph-example {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  color: var(--text-3);
+  font-style: italic;
+  font-size: 12px;
+}
+.example-block {
+  font-size: 13px;
+  color: var(--text-2);
+  font-style: italic;
+  padding: 8px 10px;
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+}

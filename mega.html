@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A+B+C English — 400+ слов</title>
+</head>
+<body>
+
+  <div class="mega-header">
+    <h1>
+      <span class="accent">A</span>+<span class="accent2">B</span>+<span class="accent3">C</span>
+      ENGLISH 400+
+    </h1>
+    <p class="sub">Фразовые глаголы · транскрипция · RU · HY</p>
+  </div>
+
+  <div class="mega-controls">
+    <div class="ctrl-row">
+      <span class="ctrl-label">Уровень</span>
+      <div class="ctrl-chips">
+        <button type="button" class="filter-btn lv-btn-a active" data-lv="A">A1/A2</button>
+        <button type="button" class="filter-btn lv-btn-b active" data-lv="B">B1/B2</button>
+        <button type="button" class="filter-btn lv-btn-c active" data-lv="C">C1/C2</button>
+      </div>
+      <span class="ctrl-label" style="margin-left:8px">Тема</span>
+      <div class="ctrl-chips">
+        <button type="button" class="filter-btn active" data-cat="all">Все</button>
+        <button type="button" class="filter-btn" data-cat="motion">Движение</button>
+        <button type="button" class="filter-btn" data-cat="object">Предметы</button>
+        <button type="button" class="filter-btn" data-cat="people">Люди</button>
+        <button type="button" class="filter-btn" data-cat="emotion">Эмоции</button>
+        <button type="button" class="filter-btn" data-cat="daily">Быт</button>
+        <button type="button" class="filter-btn" data-cat="talk">Речь</button>
+        <button type="button" class="filter-btn" data-cat="mind">Мышление</button>
+        <button type="button" class="filter-btn" data-cat="formal">Формальный</button>
+      </div>
+    </div>
+    <input class="search-input" id="search" placeholder="По-английски, по-русски, по-армянски…" autocomplete="off">
+  </div>
+
+  <div class="mega-stats">
+    <span>Показано: <strong id="shown">0</strong> · Выучено: <strong id="lc">0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <script type="module" src="/src/mega/main.js"></script>
+</body>
+</html>

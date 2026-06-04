@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ТОП 500+ слов для старта</title>
+</head>
+<body>
+
+  <div class="top500-header">
+    <div>
+      <h1>ТОП <span>500+</span> СЛОВ</h1>
+      <p class="subtitle">Кликай на карточку — отмечай выученное. IPA под словом. Иконка динамика — прослушать.</p>
+    </div>
+    <button type="button" class="btn-add-word" id="btn-add-word" aria-expanded="false" aria-controls="add-word-panel">
+      + Добавить слово
+    </button>
+  </div>
+
+  <div class="add-word-panel" id="add-word-panel">
+    <form id="add-word-form" class="add-word-form">
+      <label>English <input name="en" type="text" required autocomplete="off" /></label>
+      <span id="en-error" class="input-error"></span>
+      <label>IPA (необязательно) <input name="ipa" type="text" autocomplete="off" placeholder="[ˈwɜːd]" /></label>
+      <label>Перевод (RU) <input name="ru" type="text" required autocomplete="off" /></label>
+      <label>Пример <input name="ex" type="text" required autocomplete="off" /></label>
+      <label>Уровень
+        <select name="level">
+          <option value="A1">A1</option>
+          <option value="A2">A2</option>
+          <option value="B1">B1</option>
+          <option value="B2">B2</option>
+          <option value="C1">C1</option>
+          <option value="C2">C2</option>
+          <option value="dev">Developer</option>
+        </select>
+      </label>
+      <button type="submit" class="btn-submit-word">Сохранить в словарь</button>
+    </form>
+  </div>
+
+  <div class="top500-controls">
+    <div class="top500-filters" id="filters">
+      <button class="filter-btn active" data-cat="all">Все</button>
+      <button class="filter-btn" data-cat="A0">A0</button>
+      <button class="filter-btn" data-cat="A1">A1</button>
+      <button class="filter-btn" data-cat="A2">A2</button>
+      <button class="filter-btn" data-cat="B1">B1</button>
+      <button class="filter-btn" data-cat="B2">B2</button>
+      <button class="filter-btn" data-cat="C1">C1</button>
+      <button class="filter-btn" data-cat="C2">C2</button>
+      <button class="filter-btn" data-cat="dev">Developer</button>
+    </div>
+    <div class="top500-search">
+      <input class="search-input" id="search" placeholder="Поиск по слову..." />
+    </div>
+  </div>
+
+  <div class="top500-stats">
+    <span>Выучено: <strong id="learned-count">0</strong> / <strong id="total-count">0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <script type="module" src="/src/top500/main.js"></script>
+</body>
+</html>

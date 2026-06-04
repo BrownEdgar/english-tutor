@@ -1,0 +1,216 @@
+/* Top500-specific styles */
+.top500-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 24px 16px 12px;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.top500-header h1 {
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--text);
+}
+.top500-header h1 span {
+  color: var(--accent);
+}
+.top500-header .subtitle {
+  font-size: 12px;
+  color: var(--text-2);
+  margin-top: 4px;
+}
+
+.btn-add-word {
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--t);
+}
+.btn-add-word:hover {
+  background: var(--accent-h);
+}
+
+/* Add word panel */
+.add-word-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.3s ease,
+    padding 0.3s;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.add-word-panel.open {
+  max-height: 600px;
+}
+
+.add-word-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  padding: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.add-word-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+.add-word-form input,
+.add-word-form select {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color var(--t);
+}
+.add-word-form input:focus,
+.add-word-form select:focus {
+  border-color: var(--accent);
+}
+.input-error {
+  font-size: 11px;
+  color: var(--red);
+}
+.btn-submit-word {
+  align-self: end;
+  padding: 8px 16px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--t);
+}
+.btn-submit-word:hover {
+  background: var(--accent-h);
+}
+
+/* Controls */
+.top500-controls {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 50;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  transition:
+    background var(--t),
+    border-color var(--t);
+}
+.top500-filters {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 8px 16px 4px;
+}
+.top500-filters::-webkit-scrollbar {
+  display: none;
+}
+.top500-search {
+  padding: 4px 16px 8px;
+}
+
+.top500-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: var(--text-2);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.top500-stats strong {
+  color: var(--text);
+}
+.top500-stats .progress-bar {
+  flex: 1;
+}
+
+/* Card */
+.top-card {
+  position: relative;
+}
+
+.top-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.word-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+}
+.word-en {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+}
+.word-ipa {
+  font-size: 13px;
+  color: var(--text-3);
+  font-family: 'JetBrains Mono', monospace;
+}
+.word-ru {
+  font-size: 14px;
+  color: var(--text-2);
+  margin-bottom: 6px;
+}
+.example {
+  font-size: 13px;
+  color: var(--text-3);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.card-voice {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: background var(--t);
+}
+.card-voice:hover {
+  background: var(--accent-bg);
+}

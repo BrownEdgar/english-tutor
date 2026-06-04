@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Rules — Произношение и Грамматика</title>
+</head>
+<body>
+
+  <div class="rules-page-header">
+    <h1>English <span>Rules</span></h1>
+    <p class="intro">
+      Произношение · Правописание · Грамматика · Ловушки.<br>
+      Почему «knife» пишется с k, но звучит как /naɪf/.<br>
+      Кликни правило → раскроется объяснение + примеры.
+    </p>
+  </div>
+
+  <div class="rules-controls">
+    <div class="sec-nav" id="nav">
+      <button class="nbtn active" data-sec="all">Все</button>
+      <button class="nbtn" data-sec="silent">🔇 Немые</button>
+      <button class="nbtn" data-sec="vowels">🔤 Гласные</button>
+      <button class="nbtn" data-sec="consonants">💬 Согласные</button>
+      <button class="nbtn" data-sec="endings">📍 Окончания</button>
+      <button class="nbtn" data-sec="stress">🎵 Ударение</button>
+      <button class="nbtn" data-sec="spelling">✏️ Правописание</button>
+      <button class="nbtn" data-sec="grammar">📐 Грамматика</button>
+      <button class="nbtn" data-sec="confusing">⚡ Путаница</button>
+    </div>
+    <input class="search-input" id="search" placeholder="Поиск правила... (knight, ea, -ed, stress...)">
+  </div>
+
+  <div class="rules-stats">
+    <span>Выучено: <strong id="learned-count">0</strong> / <strong id="total-count">0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+  </div>
+
+  <div id="sections"></div>
+
+  <script type="module" src="/src/rules/main.js"></script>
+</body>
+</html>
