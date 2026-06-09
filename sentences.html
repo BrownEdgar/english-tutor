@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>127+ практических предложений</title>
+</head>
+<body>
+
+  <div class="sent-page-hero">
+    <h1>127+ практических <em>предложений</em></h1>
+    <p class="subtitle">There is / There are · Phrasal Verbs · Advanced Vocabulary A–C</p>
+  </div>
+
+  <div class="sent-page-wrap">
+
+    <!-- Add-sentence form -->
+    <form class="sent-form card" id="sent-form" novalidate>
+      <div class="section-title">Добавить предложение</div>
+      <div class="sent-form-grid">
+        <div class="sent-field sent-field--full">
+          <label class="sent-label" for="sent-en">Английское предложение</label>
+          <textarea class="search-input sent-textarea" id="sent-en" rows="2"
+            placeholder="She had to get on the early train…" required></textarea>
+        </div>
+        <div class="sent-field">
+          <label class="sent-label" for="sent-hl">
+            Слова для выделения
+            <span class="sent-label-hint">через запятую</span>
+          </label>
+          <input class="search-input" id="sent-hl" placeholder="get on, train" autocomplete="off">
+        </div>
+        <div class="sent-field">
+          <label class="sent-label" for="sent-am">
+            Перевод / объяснение
+            <span class="sent-label-hint">необязательно</span>
+          </label>
+          <input class="search-input" id="sent-am"
+            placeholder="Она была вынуждена сесть на ранний поезд…" autocomplete="off">
+        </div>
+      </div>
+      <div class="sent-preview" id="sent-preview"></div>
+      <button class="btn btn-primary sent-submit" type="submit">Добавить</button>
+    </form>
+
+    <!-- Table injected by JS -->
+    <div id="sent-table-wrap"></div>
+
+  </div>
+
+  <script type="module" src="/src/sentences/main.js"></script>
+</body>
+</html>

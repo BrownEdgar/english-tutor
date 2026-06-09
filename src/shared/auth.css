@@ -1,0 +1,175 @@
+/* Login modal overlay */
+.login-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.login-overlay.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Modal panel slides from top */
+.login-modal {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-110%);
+  transition: transform 0.38s cubic-bezier(0.34, 1.3, 0.64, 1);
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.18),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 32px 28px 28px;
+  border-top: 3px solid var(--accent);
+}
+.login-overlay.visible .login-modal {
+  transform: translateX(-50%) translateY(0);
+}
+
+.login-modal-logo {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+.login-modal-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.login-modal-sub {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-2);
+  margin-bottom: 24px;
+}
+
+.login-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.login-field-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.login-field-input {
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition:
+    border-color 0.18s,
+    box-shadow 0.18s;
+}
+.login-field-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
+}
+.login-error {
+  font-size: 12px;
+  color: var(--red);
+  text-align: center;
+  min-height: 16px;
+}
+
+.login-btn-submit {
+  margin-top: 4px;
+  width: 100%;
+  padding: 11px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition:
+    background var(--t),
+    transform 0.1s,
+    box-shadow 0.15s;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.login-btn-submit:hover {
+  background: var(--accent-h);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.login-btn-submit:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.login-btn-cancel {
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-2);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background var(--t);
+}
+.login-btn-cancel:hover {
+  background: var(--surface2);
+}
+
+/* Nav auth button */
+.btn-auth {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background var(--t),
+    color var(--t),
+    border-color var(--t);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-auth:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+.btn-auth.logged-in {
+  border-color: var(--green);
+  color: var(--green);
+}
+.btn-auth.logged-in:hover {
+  background: var(--green-bg);
+}

@@ -2,6 +2,7 @@ import './shared/design-system.css';
 import './home.css';
 import { initTheme, toggleTheme } from './shared/theme.js';
 import { getProgress } from './shared/storage.js';
+import { createAuthButton } from './shared/auth.js';
 
 const APPS = [
   {
@@ -40,6 +41,24 @@ const APPS = [
     total: 871,
     color: '#8b5cf6',
   },
+  {
+    id: 'irregular',
+    href: 'irregular.html',
+    title: 'Irregular Verbs',
+    subtitle: 'V1 → V2 → V3 · HY · RU · 100 բայ',
+    icon: '🔀',
+    total: 100,
+    color: '#e11d48',
+  },
+  {
+    id: 'sentences',
+    href: 'sentences.html',
+    title: '127+ предложений',
+    subtitle: 'There is/are · фразовые глаголы · лексика A–C',
+    icon: '✍️',
+    total: 127,
+    color: '#0891b2',
+  },
 ];
 
 function renderCards() {
@@ -77,4 +96,5 @@ function renderCards() {
 
 initTheme();
 document.querySelector('.theme-btn').addEventListener('click', toggleTheme);
+document.querySelector('.home-nav').appendChild(createAuthButton());
 renderCards();

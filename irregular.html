@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Irregular Verbs — Անկանոն բայեր</title>
+</head>
+<body>
+
+  <div class="irreg-header">
+    <h1>Irregular <span>Verbs</span></h1>
+    <p class="intro">100 ամենատարածված անկանոն բայ · Infinitive → Past Simple → Past Participle · Կտտացրե՛ք տողի վրա — նշե՛ք որպես սովորած։</p>
+  </div>
+
+  <div class="irreg-controls-wrap">
+    <div class="irreg-controls-inner">
+      <input class="irreg-search" id="search" placeholder="Որոնել բայ, թարգմանություն..." autocomplete="off" />
+      <button class="btn-reset" id="btn-reset">Սկսել նորից</button>
+    </div>
+  </div>
+
+  <div class="irreg-stats">
+    <span>Սովորած՝ <strong id="learned-count">0</strong> / <strong id="total-count">0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+  </div>
+
+  <div class="irreg-table-wrap">
+    <table class="irreg-table">
+      <thead>
+        <tr>
+          <th class="col-num">#</th>
+          <th class="col-v1">Infinitive (V1)</th>
+          <th class="col-v2">Past Simple (V2)</th>
+          <th class="col-v3">Past Participle (V3)</th>
+          <th class="col-hy">Հայerén</th>
+          <th class="col-ru">Русский</th>
+          <th class="col-check"></th>
+        </tr>
+      </thead>
+      <tbody id="verbs-body"></tbody>
+    </table>
+  </div>
+
+  <script type="module" src="/src/irregular/main.js"></script>
+</body>
+</html>

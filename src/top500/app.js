@@ -49,12 +49,25 @@ export function initAddWord() {
   const form = document.getElementById('add-word-form');
   if (!addBtn || !panel || !form) return;
 
+  const closeBtn = document.getElementById('btn-close-panel');
+
+  function openPanel() {
+    panel.classList.add('open');
+    addBtn.setAttribute('aria-expanded', 'true');
+  }
+  function closePanel() {
+    panel.classList.remove('open');
+    addBtn.setAttribute('aria-expanded', 'false');
+  }
+
   addBtn.addEventListener('click', () => {
-    panel.classList.toggle('open');
-    addBtn.setAttribute(
-      'aria-expanded',
-      panel.classList.contains('open') ? 'true' : 'false'
-    );
+    panel.classList.contains('open') ? closePanel() : openPanel();
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', closePanel);
+
+  window.addEventListener('auth-change', ({ detail }) => {
+    if (!detail.loggedIn) closePanel();
   });
 
   const enInput = form.querySelector('input[name="en"]');
@@ -101,8 +114,7 @@ export function initAddWord() {
     custom.push(entry);
     saveCustomWords(custom);
     form.reset();
-    panel.classList.remove('open');
-    addBtn.setAttribute('aria-expanded', 'false');
+    closePanel();
     redraw();
   });
 }

@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+/* ── Page layout ───────────────────────────────── */
+.sent-page-hero {
+  padding: 36px 16px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+.sent-page-hero h1 {
+  font-size: clamp(24px, 5vw, 40px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  color: var(--text);
+}
+.sent-page-hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+.sent-page-hero .subtitle {
+  font-size: 14px;
+  color: var(--text-2);
+  margin-top: 8px;
+}
+.sent-page-wrap {
+  max-width: 1100px;
+  margin: 0 auto 64px;
+  padding: 0 16px;
+}
+
+/* ── Add form ──────────────────────────────────── */
+.sent-form {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+}
+.sent-form .section-title {
+  margin-bottom: 0;
+}
+.sent-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 600px) {
+  .sent-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.sent-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sent-field:first-child {
+  grid-column: 1 / -1;
+}
+.sent-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sent-label-hint {
+  font-weight: 400;
+  color: var(--text-3);
+}
+.sent-textarea {
+  resize: vertical;
+  min-height: 60px;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.sent-preview {
+  min-height: 28px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--surface2);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.7;
+  transition: background var(--t);
+}
+.sent-preview-hint {
+  color: var(--text-3);
+  font-style: italic;
+}
+.sent-submit {
+  align-self: flex-start;
+}
+
+/* ── Highlight word ────────────────────────────── */
+.sent-hl {
+  color: var(--red);
+  text-decoration: underline;
+  font-weight: 700;
+  cursor: help;
+}
+
+/* ── Stats + search ────────────────────────────── */
+.sent-stats {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-2);
+  padding: 0 0 10px;
+}
+.sent-stats strong {
+  color: var(--text);
+}
+.sent-search-wrap {
+  margin-bottom: 12px;
+}
+
+/* ── Table ─────────────────────────────────────── */
+.sent-table-scroll {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+.sent-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.sent-table thead tr {
+  background: var(--surface2);
+}
+.sent-table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+.sent-table td {
+  padding: 13px 14px;
+  border-top: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.65;
+}
+.sent-table tbody tr:hover {
+  background: var(--surface2);
+}
+.sent-num {
+  color: var(--text-3);
+  font-size: 12px;
+  width: 36px;
+  white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+}
+.sent-en {
+  min-width: 260px;
+  color: var(--text);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 15.5px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+.sent-am {
+  min-width: 200px;
+  color: var(--text-2);
+  font-style: italic;
+  font-size: 13.5px;
+  font-family: 'Lora', Georgia, serif;
+}
+.sent-del {
+  width: 32px;
+  text-align: center;
+}
+.sent-del-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-3);
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  transition: color var(--t), background var(--t);
+  line-height: 1;
+}
+.sent-del-btn:hover {
+  color: var(--red);
+  background: rgba(239, 68, 68, 0.08);
+}

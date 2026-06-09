@@ -3,7 +3,9 @@ const KEYS = {
   mega: 'en_app_mega_learned',
   phrasal: 'en_app_phrasal_learned',
   top500: 'en_app_top500_learned',
-  top500c: 'en_app_top500_custom',
+  top500c:   'en_app_top500_custom',
+  irregular: 'en_app_irregular_learned',
+  sentences: 'en_app_sentences_learned',
 };
 
 export function loadSet(section) {

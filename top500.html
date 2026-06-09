@@ -12,31 +12,55 @@
       <h1>ТОП <span>500+</span> СЛОВ</h1>
       <p class="subtitle">Кликай на карточку — отмечай выученное. IPA под словом. Иконка динамика — прослушать.</p>
     </div>
-    <button type="button" class="btn-add-word" id="btn-add-word" aria-expanded="false" aria-controls="add-word-panel">
+    <button type="button" class="btn-add-word" id="btn-add-word" aria-expanded="false" aria-controls="add-word-panel" hidden>
       + Добавить слово
     </button>
   </div>
 
   <div class="add-word-panel" id="add-word-panel">
-    <form id="add-word-form" class="add-word-form">
-      <label>English <input name="en" type="text" required autocomplete="off" /></label>
-      <span id="en-error" class="input-error"></span>
-      <label>IPA (необязательно) <input name="ipa" type="text" autocomplete="off" placeholder="[ˈwɜːd]" /></label>
-      <label>Перевод (RU) <input name="ru" type="text" required autocomplete="off" /></label>
-      <label>Пример <input name="ex" type="text" required autocomplete="off" /></label>
-      <label>Уровень
-        <select name="level">
-          <option value="A1">A1</option>
-          <option value="A2">A2</option>
-          <option value="B1">B1</option>
-          <option value="B2">B2</option>
-          <option value="C1">C1</option>
-          <option value="C2">C2</option>
-          <option value="dev">Developer</option>
-        </select>
-      </label>
-      <button type="submit" class="btn-submit-word">Сохранить в словарь</button>
-    </form>
+    <div class="add-word-inner">
+      <div class="add-word-header">
+        <span class="add-word-title">✦ Новое слово</span>
+        <button type="button" class="btn-close-panel" id="btn-close-panel" aria-label="Закрыть">✕</button>
+      </div>
+      <form id="add-word-form" class="add-word-form">
+        <div class="form-field">
+          <label class="field-label" for="input-en">English <span class="required">*</span></label>
+          <input id="input-en" name="en" type="text" required autocomplete="off" placeholder="e.g. ambiguous" class="field-input" />
+          <span id="en-error" class="input-error"></span>
+        </div>
+        <div class="form-field">
+          <label class="field-label" for="input-ipa">IPA <span class="optional">необяз.</span></label>
+          <input id="input-ipa" name="ipa" type="text" autocomplete="off" placeholder="[æmˈbɪɡjuəs]" class="field-input" />
+        </div>
+        <div class="form-field">
+          <label class="field-label" for="input-ru">Перевод (RU) <span class="required">*</span></label>
+          <input id="input-ru" name="ru" type="text" required autocomplete="off" placeholder="e.g. неоднозначный" class="field-input" />
+        </div>
+        <div class="form-field">
+          <label class="field-label" for="input-level">Уровень</label>
+          <select id="input-level" name="level" class="field-input field-select">
+            <option value="A1">A1</option>
+            <option value="A2">A2</option>
+            <option value="B1">B1</option>
+            <option value="B2">B2</option>
+            <option value="C1">C1</option>
+            <option value="C2">C2</option>
+            <option value="dev">Developer</option>
+          </select>
+        </div>
+        <div class="form-field form-field--wide">
+          <label class="field-label" for="input-ex">Пример предложения <span class="required">*</span></label>
+          <input id="input-ex" name="ex" type="text" required autocomplete="off" placeholder="e.g. The instructions were ambiguous." class="field-input" />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-submit-word">
+            <span>Сохранить</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <div class="top500-controls">

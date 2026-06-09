@@ -145,6 +145,13 @@ body {
   letter-spacing: 0.02em;
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
 .theme-btn {
   width: 36px;
   height: 36px;

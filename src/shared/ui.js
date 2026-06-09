@@ -1,4 +1,5 @@
 import { initTheme, toggleTheme } from './theme.js';
+import { createAuthButton } from './auth.js';
 
 export function mountNav({ title, backHref = 'index.html' }) {
   const nav = document.createElement('nav');
@@ -11,10 +12,15 @@ export function mountNav({ title, backHref = 'index.html' }) {
       Назад
     </a>
     <span class="nav-title">${title}</span>
-    <button class="theme-btn" aria-label="Сменить тему">🌙</button>
+    <div class="nav-actions">
+      <button class="theme-btn" aria-label="Сменить тему">🌙</button>
+    </div>
   `;
   document.body.prepend(nav);
 
   initTheme();
   nav.querySelector('.theme-btn').addEventListener('click', toggleTheme);
+  nav.querySelector('.nav-actions').prepend(createAuthButton());
+
+  return nav;
 }
