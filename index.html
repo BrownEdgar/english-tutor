@@ -1,22 +1,59 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="light">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>English Learning — Главная</title>
+  <title>English Learning — Home</title>
 </head>
 <body>
 
   <nav class="home-nav">
     <span class="home-nav-logo">EN ✦</span>
-    <button class="theme-btn" aria-label="Сменить тему">🌙</button>
+    <div style="display:flex;align-items:center;gap:8px;margin-left:auto">
+      <button class="theme-btn" aria-label="Toggle theme">🌙</button>
+    </div>
   </nav>
 
   <div class="home-hero">
-    <h1>Учи <em>английский</em><br>каждый день</h1>
-    <p>4 инструмента для изучения слов, правил и фраз.<br>Весь прогресс сохраняется в браузере.</p>
+    <h1>Speak <em>English</em><br>from day one</h1>
+    <p>Dialogues · Vocabulary · Rules · Phrases<br>Built for Armenian speakers. Progress saved in your browser.</p>
   </div>
 
+  <!-- Gamification bar -->
+  <div class="home-gamification" id="home-gamification">
+    <div class="gam-stats">
+      <div class="gam-stat">
+        <span class="gam-stat-icon">🔥</span>
+        <span class="gam-stat-num" id="gam-streak">0</span>
+        <span class="gam-stat-label">day streak</span>
+      </div>
+      <div class="gam-stat">
+        <span class="gam-stat-icon">⚡</span>
+        <span class="gam-stat-num" id="gam-xp">0</span>
+        <span class="gam-stat-label">XP</span>
+      </div>
+      <div class="gam-level" id="gam-level">A1 Beginner</div>
+    </div>
+    <div class="gam-xp-bar">
+      <div class="gam-xp-fill" id="gam-xp-fill" style="width:0%"></div>
+    </div>
+    <div class="gam-xp-hint" id="gam-xp-hint"></div>
+  </div>
+
+  <!-- Daily phrase -->
+  <div class="daily-phrase-card" id="daily-phrase-card">
+    <div class="daily-label">💬 Phrase of the Day</div>
+    <div class="daily-level-row">
+      <span class="daily-level" id="daily-level"></span>
+    </div>
+    <div class="daily-en" id="daily-en"></div>
+    <div class="daily-hy" id="daily-hy"></div>
+    <div class="daily-tip" id="daily-tip"></div>
+    <div class="daily-note" id="daily-note"></div>
+    <button class="daily-speak btn btn-ghost" id="daily-speak">🔊 Listen</button>
+  </div>
+
+  <!-- Module cards -->
   <div class="apps-grid" id="apps-grid"></div>
 
   <script type="module" src="/src/main.js"></script>

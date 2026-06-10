@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversations A1–C2</title>
+</head>
+<body>
+
+  <div class="conv-stats stats-row">
+    <span>Practiced: <strong id="conv-practiced">0</strong> / <strong id="conv-total">0</strong></span>
+    <div class="progress-bar" style="flex:1;max-width:160px">
+      <div class="progress-fill" id="conv-pf"></div>
+    </div>
+  </div>
+
+  <div class="conv-toolbar page-wrap">
+    <div class="conv-filter-row chip-row" id="conv-filters">
+      <button class="filter-btn active" data-level="all">All</button>
+      <button class="filter-btn" data-level="A1">A1</button>
+      <button class="filter-btn" data-level="A2">A2</button>
+      <button class="filter-btn" data-level="B1">B1</button>
+      <button class="filter-btn" data-level="B2">B2</button>
+      <button class="filter-btn" data-level="C1">C1</button>
+      <button class="filter-btn" data-level="C2">C2</button>
+    </div>
+    <input
+      class="search-input"
+      id="conv-search"
+      placeholder="Search conversations…"
+      autocomplete="off"
+    >
+  </div>
+
+  <div class="conv-grid" id="conv-grid"></div>
+
+  <!-- Conversation modal -->
+  <div class="conv-modal" id="conv-modal" role="dialog" aria-modal="true">
+    <div class="conv-modal-content">
+      <button class="conv-modal-close" id="btn-close-modal" aria-label="Close">✕</button>
+      <div id="conv-modal-inner"></div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/conversations/main.js"></script>
+</body>
+</html>
