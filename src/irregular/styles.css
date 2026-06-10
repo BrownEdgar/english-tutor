@@ -31,7 +31,9 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  transition: background var(--t), border-color var(--t);
+  transition:
+    background var(--t),
+    border-color var(--t);
   max-width: 960px;
   margin: 0 auto;
   box-sizing: border-box;
@@ -44,7 +46,9 @@
   z-index: 50;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
-  transition: background var(--t), border-color var(--t);
+  transition:
+    background var(--t),
+    border-color var(--t);
 }
 .irreg-controls-inner {
   max-width: 960px;
@@ -65,7 +69,9 @@
   color: var(--text);
   font-size: 14px;
   outline: none;
-  transition: border-color var(--t), background var(--t);
+  transition:
+    border-color var(--t),
+    background var(--t);
 }
 .irreg-search:focus {
   border-color: var(--accent);
@@ -80,7 +86,10 @@
   color: var(--text-2);
   font-size: 13px;
   cursor: pointer;
-  transition: border-color var(--t), color var(--t), background var(--t);
+  transition:
+    border-color var(--t),
+    color var(--t),
+    background var(--t);
   white-space: nowrap;
 }
 .btn-reset:hover {
@@ -203,7 +212,10 @@
   align-items: center;
   justify-content: center;
   color: var(--text-3);
-  transition: border-color 0.15s, background 0.15s, color 0.15s;
+  transition:
+    border-color 0.15s,
+    background 0.15s,
+    color 0.15s;
 }
 .check-btn svg {
   width: 14px;

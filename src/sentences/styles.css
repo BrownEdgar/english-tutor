@@ -92,8 +92,41 @@
   color: var(--text-3);
   font-style: italic;
 }
+.sent-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 .sent-submit {
-  align-self: flex-start;
+  align-self: auto;
+}
+.sent-sync-btn {
+  background: var(--surface2);
+  color: var(--text-2);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    background var(--t),
+    color var(--t),
+    border-color var(--t);
+  white-space: nowrap;
+}
+.sent-sync-btn:hover:not(:disabled) {
+  background: var(--surface3, var(--surface2));
+  color: var(--text);
+  border-color: var(--text-3);
+}
+.sent-sync-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.sent-sync-btn--ok {
+  color: var(--green, #22c55e);
+  border-color: var(--green, #22c55e);
 }
 
 /* ── Highlight word ────────────────────────────── */
@@ -186,7 +219,9 @@
   color: var(--text-3);
   padding: 4px 6px;
   border-radius: var(--radius-sm);
-  transition: color var(--t), background var(--t);
+  transition:
+    color var(--t),
+    background var(--t);
   line-height: 1;
 }
 .sent-del-btn:hover {

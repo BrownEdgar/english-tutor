@@ -1,11 +1,11 @@
 const KEYS = {
-  rules:         'en_app_rules_learned',
-  mega:          'en_app_mega_learned',
-  phrasal:       'en_app_phrasal_learned',
-  top500:        'en_app_top500_learned',
-  top500c:       'en_app_top500_custom',
-  irregular:     'en_app_irregular_learned',
-  sentences:     'en_app_sentences_learned',
+  rules: 'en_app_rules_learned',
+  mega: 'en_app_mega_learned',
+  phrasal: 'en_app_phrasal_learned',
+  top500: 'en_app_top500_learned',
+  top500c: 'en_app_top500_custom',
+  irregular: 'en_app_irregular_learned',
+  sentences: 'en_app_sentences_learned',
   conversations: 'en_app_conversations_practiced',
 };
 

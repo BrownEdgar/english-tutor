@@ -128,7 +128,8 @@ function renderGamification() {
     document.getElementById('gam-xp-hint').textContent =
       `${xpToNext} XP to reach next level`;
   } else {
-    document.getElementById('gam-xp-hint').textContent = 'Maximum level reached!';
+    document.getElementById('gam-xp-hint').textContent =
+      'Maximum level reached!';
   }
 }
 
@@ -163,7 +164,10 @@ function renderDailyPhrase() {
       window.speechSynthesis.speak(utter);
     };
     if (window.speechSynthesis.getVoices().length) go();
-    else window.speechSynthesis.addEventListener('voiceschanged', go, { once: true });
+    else
+      window.speechSynthesis.addEventListener('voiceschanged', go, {
+        once: true,
+      });
   });
 }
 

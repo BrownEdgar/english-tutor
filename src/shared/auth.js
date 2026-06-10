@@ -11,7 +11,9 @@ export function isLoggedIn() {
 function setLoggedIn(value) {
   if (value) sessionStorage.setItem(SESSION_KEY, '1');
   else sessionStorage.removeItem(SESSION_KEY);
-  window.dispatchEvent(new CustomEvent('auth-change', { detail: { loggedIn: value } }));
+  window.dispatchEvent(
+    new CustomEvent('auth-change', { detail: { loggedIn: value } })
+  );
 }
 
 export function logout() {
@@ -80,7 +82,8 @@ function createModal() {
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay.classList.contains('visible')) closeModal();
+    if (e.key === 'Escape' && overlay.classList.contains('visible'))
+      closeModal();
   });
 }
 
@@ -94,7 +97,8 @@ function openModal() {
 
 function closeModal() {
   overlay?.classList.remove('visible');
-  overlay?.querySelector('#login-error') && (overlay.querySelector('#login-error').textContent = '');
+  overlay?.querySelector('#login-error') &&
+    (overlay.querySelector('#login-error').textContent = '');
 }
 
 /* ── Auth button ── */

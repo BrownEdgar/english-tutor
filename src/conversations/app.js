@@ -59,7 +59,9 @@ function speak(text, rate = 0.9) {
   if (window.speechSynthesis.getVoices().length) {
     go();
   } else {
-    window.speechSynthesis.addEventListener('voiceschanged', go, { once: true });
+    window.speechSynthesis.addEventListener('voiceschanged', go, {
+      once: true,
+    });
   }
 }
 
@@ -249,15 +251,17 @@ function openModal(id) {
 
   // Armenian translation toggle
   let hyShown = false;
-  document.getElementById('btn-translate-toggle').addEventListener('click', () => {
-    hyShown = !hyShown;
-    inner.querySelectorAll('.conv-line-hy').forEach((el) => {
-      el.classList.toggle('hidden', !hyShown);
+  document
+    .getElementById('btn-translate-toggle')
+    .addEventListener('click', () => {
+      hyShown = !hyShown;
+      inner.querySelectorAll('.conv-line-hy').forEach((el) => {
+        el.classList.toggle('hidden', !hyShown);
+      });
+      document.getElementById('btn-translate-toggle').textContent = hyShown
+        ? '🇦🇲 Hide Armenian'
+        : '🇦🇲 Show Armenian';
     });
-    document.getElementById('btn-translate-toggle').textContent = hyShown
-      ? '🇦🇲 Hide Armenian'
-      : '🇦🇲 Show Armenian';
-  });
 
   // Read all
   document.getElementById('btn-read-all').addEventListener('click', () => {
@@ -266,16 +270,18 @@ function openModal(id) {
   });
 
   // Mark as practiced
-  document.getElementById('btn-mark-practiced').addEventListener('click', () => {
-    if (practiced.has(id)) {
-      practiced.delete(id);
-    } else {
-      practiced.add(id);
-    }
-    saveSet('conversations', practiced);
-    renderGrid();
-    openModal(id); // re-render modal with updated state
-  });
+  document
+    .getElementById('btn-mark-practiced')
+    .addEventListener('click', () => {
+      if (practiced.has(id)) {
+        practiced.delete(id);
+      } else {
+        practiced.add(id);
+      }
+      saveSet('conversations', practiced);
+      renderGrid();
+      openModal(id); // re-render modal with updated state
+    });
 
   // Practice mode
   document.getElementById('btn-practice-mode').addEventListener('click', () => {
@@ -368,5 +374,7 @@ export function initConversations() {
   });
 
   // Close button
-  document.getElementById('btn-close-modal').addEventListener('click', closeModal);
+  document
+    .getElementById('btn-close-modal')
+    .addEventListener('click', closeModal);
 }

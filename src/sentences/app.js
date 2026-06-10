@@ -34,14 +34,17 @@ function applyHighlights(text, words) {
       const titleAttr = hint ? ` title="${hint}"` : '';
       result = result.replace(
         new RegExp(`(${escaped})`, 'gi'),
-        `<span class="sent-hl"${titleAttr}>$1</span>`,
+        `<span class="sent-hl"${titleAttr}>$1</span>`
       );
     });
   return result;
 }
 
 function parseHighlights(raw) {
-  return raw.split(',').map((s) => s.trim()).filter(Boolean);
+  return raw
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
 }
 
 function buildTable(customList) {
@@ -102,7 +105,8 @@ function buildTable(customList) {
   document.getElementById('sent-search').addEventListener('input', (e) => {
     const q = e.target.value.toLowerCase();
     tbody.querySelectorAll('.sent-row').forEach((tr) => {
-      tr.style.display = q && !tr.textContent.toLowerCase().includes(q) ? 'none' : '';
+      tr.style.display =
+        q && !tr.textContent.toLowerCase().includes(q) ? 'none' : '';
     });
   });
 
@@ -141,7 +145,11 @@ function initForm() {
     if (!en) return;
 
     const custom = loadCustom();
-    const maxId = Math.max(...SENTENCES.map((s) => s.id), ...custom.map((s) => s.id), 127);
+    const maxId = Math.max(
+      ...SENTENCES.map((s) => s.id),
+      ...custom.map((s) => s.id),
+      127
+    );
 
     custom.push({
       id: maxId + 1,
@@ -163,7 +171,64 @@ function initForm() {
   });
 }
 
+function initSyncButton() {
+  if (!import.meta.env.DEV) return;
+
+  const form = document.getElementById('sent-form');
+  const submitBtn = form.querySelector('.sent-submit');
+
+  const wrap = document.createElement('div');
+  wrap.className = 'sent-form-actions';
+  submitBtn.parentNode.insertBefore(wrap, submitBtn);
+  wrap.appendChild(submitBtn);
+
+  const syncBtn = document.createElement('button');
+  syncBtn.type = 'button';
+  syncBtn.className = 'btn sent-sync-btn';
+  syncBtn.textContent = 'Sync → data.js';
+  wrap.appendChild(syncBtn);
+
+  syncBtn.addEventListener('click', async () => {
+    const custom = loadCustom();
+    if (!custom.length) {
+      syncBtn.textContent = 'Нечего синхронизировать';
+      setTimeout(() => (syncBtn.textContent = 'Sync → data.js'), 2000);
+      return;
+    }
+
+    syncBtn.disabled = true;
+    syncBtn.textContent = 'Синхронизация…';
+
+    try {
+      const res = await fetch('/api/sentences-sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(custom),
+      });
+      const data = await res.json();
+
+      if (res.ok && data.synced > 0) {
+        saveCustom([]);
+        buildTable([]);
+        syncBtn.textContent = `✓ Добавлено в data.js: ${data.synced}`;
+        syncBtn.classList.add('sent-sync-btn--ok');
+      } else if (data.error) {
+        syncBtn.textContent = `Ошибка: ${data.error}`;
+      }
+    } catch (err) {
+      syncBtn.textContent = `Ошибка: ${err.message}`;
+    } finally {
+      syncBtn.disabled = false;
+      setTimeout(() => {
+        syncBtn.textContent = 'Sync → data.js';
+        syncBtn.classList.remove('sent-sync-btn--ok');
+      }, 3000);
+    }
+  });
+}
+
 export function initPage() {
   buildTable(loadCustom());
   initForm();
+  initSyncButton();
 }

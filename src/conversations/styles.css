@@ -44,19 +44,55 @@
   letter-spacing: 0.04em;
   flex-shrink: 0;
 }
-.conv-level-A1 { background: #dcfce7; color: #15803d; }
-.conv-level-A2 { background: #d1fae5; color: #047857; }
-.conv-level-B1 { background: #dbeafe; color: #1d4ed8; }
-.conv-level-B2 { background: #ede9fe; color: #5b21b6; }
-.conv-level-C1 { background: #fef3c7; color: #92400e; }
-.conv-level-C2 { background: #fee2e2; color: #991b1b; }
+.conv-level-A1 {
+  background: #dcfce7;
+  color: #15803d;
+}
+.conv-level-A2 {
+  background: #d1fae5;
+  color: #047857;
+}
+.conv-level-B1 {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+.conv-level-B2 {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+.conv-level-C1 {
+  background: #fef3c7;
+  color: #92400e;
+}
+.conv-level-C2 {
+  background: #fee2e2;
+  color: #991b1b;
+}
 
-[data-theme='dark'] .conv-level-A1 { background: #14532d; color: #86efac; }
-[data-theme='dark'] .conv-level-A2 { background: #064e3b; color: #6ee7b7; }
-[data-theme='dark'] .conv-level-B1 { background: #1e3a8a; color: #93c5fd; }
-[data-theme='dark'] .conv-level-B2 { background: #3b0764; color: #c4b5fd; }
-[data-theme='dark'] .conv-level-C1 { background: #78350f; color: #fde68a; }
-[data-theme='dark'] .conv-level-C2 { background: #7f1d1d; color: #fca5a5; }
+[data-theme='dark'] .conv-level-A1 {
+  background: #14532d;
+  color: #86efac;
+}
+[data-theme='dark'] .conv-level-A2 {
+  background: #064e3b;
+  color: #6ee7b7;
+}
+[data-theme='dark'] .conv-level-B1 {
+  background: #1e3a8a;
+  color: #93c5fd;
+}
+[data-theme='dark'] .conv-level-B2 {
+  background: #3b0764;
+  color: #c4b5fd;
+}
+[data-theme='dark'] .conv-level-C1 {
+  background: #78350f;
+  color: #fde68a;
+}
+[data-theme='dark'] .conv-level-C2 {
+  background: #7f1d1d;
+  color: #fca5a5;
+}
 
 /* Conversation card grid */
 .conv-grid {
@@ -346,7 +382,9 @@
   font-size: 18px;
   padding: 4px;
   opacity: 0.5;
-  transition: opacity var(--t), transform 0.12s;
+  transition:
+    opacity var(--t),
+    transform 0.12s;
   flex-shrink: 0;
   align-self: center;
 }

@@ -1,7 +1,9 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
+import { sentencesPlugin } from './vite-plugin-sentences.js';
 
 export default defineConfig({
+  plugins: [sentencesPlugin()],
   build: {
     rollupOptions: {
       input: {
