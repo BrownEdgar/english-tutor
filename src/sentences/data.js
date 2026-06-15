@@ -1309,6 +1309,23 @@ export const SENTENCES = [
     am: 'Այնտեղ կային շատ ակնոցներ',
     hl: ['In it were'],
   },
-  { id: 149, en: "The red shoes fell off her feet", am: "Կարմիր կոշիկները դուրս եկան(անցյալ ժամանակ) նրա ոտքից:", hl: ["fell off"] },
+  {
+    id: 149,
+    en: 'The red shoes fell off her feet',
+    am: 'Կարմիր կոշիկները դուրս եկան(անցյալ ժամանակ) նրա ոտքից:',
+    hl: ['fell off'],
+  },
 
+  {
+    id: 150,
+    en: 'want to improve my English because I no longer want to be left behind.',
+    am: 'Ես ուզում եմ սովորել անգլերեն, որովհետև այլևս չեմ ուզում հետ մնալ ուրիշներից։',
+    hl: ['left behind'],
+  },
+  {
+    id: 151,
+    en: "I want to learn English because I don't want to fall behind others anymore",
+    am: 'Ես ուզում եմ սովորել անգլերեն, որովհետև այլևս չեմ ուզում հետ մնալ ուրիշներից։',
+    hl: ['fall behind'],
+  },
 ];

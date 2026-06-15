@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "deploy": "npm run build && firebase deploy --only hosting",
     "lint": "eslint src",
-    "format": "prettier --write src"
+    "format": "prettier --write src",
+    "top500:add-hy-exhy": "node scripts/add-hy-exhy-top500.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

@@ -100,7 +100,9 @@ export function initAddWord() {
     const entry = {
       en: String(fd.get('en') || '').trim(),
       ru: String(fd.get('ru') || '').trim(),
+      hy: String(fd.get('hy') || '').trim(),
       ex: String(fd.get('ex') || '').trim(),
+      exhy: String(fd.get('exhy') || '').trim(),
       cat: levelVal === 'dev' ? 'dev' : 'general',
     };
     if (levelVal !== 'dev') entry.level = levelVal;

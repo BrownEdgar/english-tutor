@@ -10,7 +10,7 @@
   <div class="top500-header">
     <div>
       <h1>ТОП <span>500+</span> СЛОВ</h1>
-      <p class="subtitle">Кликай на карточку — отмечай выученное. IPA под словом. Иконка динамика — прослушать.</p>
+      <p class="subtitle">Кликай на карточку — отмечай выученное. IPA под словом. Иконка динамика — прослушать. При добавлении своего слова можно указать армянский перевод и пример (необязательно).</p>
     </div>
     <button type="button" class="btn-add-word" id="btn-add-word" aria-expanded="false" aria-controls="add-word-panel" hidden>
       + Добавить слово
@@ -50,8 +50,16 @@
           </select>
         </div>
         <div class="form-field form-field--wide">
-          <label class="field-label" for="input-ex">Пример предложения <span class="required">*</span></label>
-          <input id="input-ex" name="ex" type="text" required autocomplete="off" placeholder="e.g. The instructions were ambiguous." class="field-input" />
+          <label class="field-label" for="input-hy">Перевод (Հայերեն) <span class="optional">необяз.</span></label>
+          <input id="input-hy" name="hy" type="text" autocomplete="off" lang="hy" placeholder="e.g. երկիմաստ" class="field-input" />
+        </div>
+        <div class="form-field form-field--wide">
+          <label class="field-label" for="input-ex">Пример (English) <span class="required">*</span></label>
+          <input id="input-ex" name="ex" type="text" required autocomplete="off" lang="en" placeholder="e.g. The instructions were ambiguous." class="field-input" />
+        </div>
+        <div class="form-field form-field--wide">
+          <label class="field-label" for="input-exhy">Пример (Հայերեն) <span class="optional">необяз.</span></label>
+          <textarea id="input-exhy" name="exhy" rows="2" autocomplete="off" lang="hy" placeholder="Армянский вариант того же примера — на отдельной строке под английским." class="field-input field-textarea"></textarea>
         </div>
         <div class="form-actions">
           <button type="submit" class="btn-submit-word">

@@ -11,8 +11,7 @@ function save() {
 export function render() {
   const q = document.getElementById('search').value.toLowerCase();
   const grid = document.getElementById('grid');
-  grid.innerHTML = '';
-  let shown = 0;
+  grid.replaceChildren();
 
   data.forEach((item, i) => {
     if (currentCat !== 'all' && item.cat !== currentCat) return;
@@ -20,7 +19,6 @@ export function render() {
       item.base +
       (item.forms ? item.forms.map((f) => f.w + f.m).join(' ') : item.ex || '');
     if (q && !searchText.toLowerCase().includes(q)) return;
-    shown++;
 
     const card = document.createElement('div');
     card.className = 'card phrasal-card' + (learned.has(i) ? ' learned' : '');
@@ -34,25 +32,27 @@ export function render() {
       daily: 'быт',
       talk: 'речь',
     };
-    let inner = `<div class="cat-label badge">${catNames[item.cat] || item.cat}</div>
-      <div class="word-main">${item.base}</div>
-      <div class="word-ru">${item.base_ru}</div>`;
+    const badgeLabel = catNames[item.cat] || item.cat;
 
-    if (item.type === 'phrasal') {
-      inner += `<div class="phrasal-group">`;
-      item.forms.forEach((f) => {
-        inner += `<div class="phrasal-row">
+    const formsBlock =
+      item.type === 'phrasal'
+        ? `<div class="phrasal-group">${item.forms
+            .map(
+              (f) =>
+                `<div class="phrasal-row">
           <span class="ph-word">${f.w}</span>
           <span class="ph-meaning">— ${f.m}</span>
           <span class="ph-example">${f.ex}</span>
-        </div>`;
-      });
-      inner += `</div>`;
-    } else {
-      inner += `<div class="example-block">${item.ex}</div>`;
-    }
+        </div>`
+            )
+            .join('')}</div>`
+        : `<div class="example-block">${item.ex}</div>`;
 
-    card.innerHTML = inner;
+    const markup = `<div class="cat-label badge">${badgeLabel}</div>
+      <div class="word-main">${item.base}</div>
+      <div class="word-ru">${item.base_ru}</div>${formsBlock}`;
+
+    card.insertAdjacentHTML('beforeend', markup);
     card.onclick = () => {
       if (learned.has(i)) learned.delete(i);
       else learned.add(i);
