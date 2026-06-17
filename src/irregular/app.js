@@ -1,12 +1,17 @@
-import { IRREGULAR_VERBS } from './data.js';
 import { loadSet, saveSet } from '../shared/storage.js';
+import { contentService } from '../shared/content-service.js';
 
 const STORAGE_KEY = 'irregular';
 const learned = loadSet(STORAGE_KEY);
 let query = '';
+let IRREGULAR_VERBS = [];
 
 function save() {
   saveSet(STORAGE_KEY, learned);
+}
+
+export async function loadVerbs() {
+  IRREGULAR_VERBS = await contentService.fetchIrregularVerbs();
 }
 
 function filtered() {
@@ -34,12 +39,11 @@ function updateStats() {
   if (progress) progress.style.width = pct + '%';
 }
 
-function renderRow(verb, i) {
-  const globalIdx = IRREGULAR_VERBS.indexOf(verb);
-  const isLearned = learned.has(globalIdx);
+function renderRow(verb, globalIdx) {
+  const isLearned = learned.has(verb.id);
   const tr = document.createElement('tr');
   tr.className = isLearned ? 'learned' : '';
-  tr.dataset.idx = globalIdx;
+  tr.dataset.verbId = verb.id;
   tr.innerHTML = `
     <td class="col-num">${globalIdx + 1}</td>
     <td class="col-v1"><strong>${verb.inf}</strong></td>
@@ -48,35 +52,25 @@ function renderRow(verb, i) {
     <td class="col-hy">${verb.hy}</td>
     <td class="col-ru">${verb.ru}</td>
     <td class="col-check">
-      <button class="check-btn${isLearned ? ' active' : ''}" aria-label="Выучено" data-idx="${globalIdx}">
+      <button class="check-btn${isLearned ? ' active' : ''}" aria-label="Выучено" data-verb-id="${verb.id}">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2">
           <path d="M3 8l3.5 3.5L13 4.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
     </td>`;
 
+  const toggle = (verbId) => {
+    if (learned.has(verbId)) learned.delete(verbId);
+    else learned.add(verbId);
+    save();
+    render();
+  };
+
   tr.querySelector('.check-btn').addEventListener('click', (e) => {
     e.stopPropagation();
-    const idx = Number(e.currentTarget.dataset.idx);
-    if (learned.has(idx)) {
-      learned.delete(idx);
-    } else {
-      learned.add(idx);
-    }
-    save();
-    render();
+    toggle(e.currentTarget.dataset.verbId);
   });
-
-  tr.addEventListener('click', () => {
-    const idx = Number(tr.dataset.idx);
-    if (learned.has(idx)) {
-      learned.delete(idx);
-    } else {
-      learned.add(idx);
-    }
-    save();
-    render();
-  });
+  tr.addEventListener('click', () => toggle(tr.dataset.verbId));
 
   return tr;
 }
@@ -86,7 +80,10 @@ export function render() {
   if (!tbody) return;
   tbody.innerHTML = '';
   const verbs = filtered();
-  verbs.forEach((v, i) => tbody.appendChild(renderRow(v, i)));
+  verbs.forEach((v) => {
+    const globalIdx = IRREGULAR_VERBS.indexOf(v);
+    tbody.appendChild(renderRow(v, globalIdx));
+  });
   updateStats();
 }
 

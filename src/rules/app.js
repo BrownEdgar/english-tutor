@@ -1,17 +1,22 @@
-import { RULES } from './data.js';
 import { loadSet, saveSet } from '../shared/storage.js';
+import { contentService } from '../shared/content-service.js';
 
 const learned = loadSet('rules');
 let activeSec = 'all';
+let RULES = [];
 
 function save() {
   saveSet('rules', learned);
 }
 
-function buildCard(rule, i) {
+export async function loadRules() {
+  RULES = await contentService.fetchRules();
+}
+
+function buildCard(rule) {
   const card = document.createElement('div');
-  card.className = 'rule card' + (learned.has(i) ? ' learned' : '');
-  card.dataset.index = i;
+  card.className = 'rule card' + (learned.has(rule.id) ? ' learned' : '');
+  card.dataset.ruleId = rule.id;
   card.dataset.sec = rule.sec;
 
   const exHtml = (rule.examples || [])
@@ -38,22 +43,22 @@ function buildCard(rule, i) {
       <div class="examples-grid">${exHtml}</div>
       ${rule.tip ? `<div class="tip-box"><strong>💡 Запомни:</strong><br>${rule.tip.replace(/\n/g, '<br>')}</div>` : ''}
       ${rule.exceptions ? `<div class="exceptions"><b>⚠ Исключения:</b> ${rule.exceptions}</div>` : ''}
-      <button class="know-btn btn btn-ghost" data-i="${i}">${learned.has(i) ? '✓ Уже знаю' : '✓ Знаю это правило'}</button>
+      <button class="know-btn btn btn-ghost" data-rule-id="${rule.id}">${learned.has(rule.id) ? '✓ Уже знаю' : '✓ Знаю это правило'}</button>
     </div>`;
 
-  card.querySelector('.rule-head').addEventListener('click', () => {
-    card.classList.toggle('open');
-  });
+  card
+    .querySelector('.rule-head')
+    .addEventListener('click', () => card.classList.toggle('open'));
+
   card.querySelector('.know-btn').addEventListener('click', (e) => {
     e.stopPropagation();
-    if (learned.has(i)) {
-      learned.delete(i);
-    } else {
-      learned.add(i);
-    }
+    const id = e.currentTarget.dataset.ruleId;
+    if (learned.has(id)) learned.delete(id);
+    else learned.add(id);
     save();
     render();
   });
+
   return card;
 }
 
@@ -66,7 +71,7 @@ export function render() {
   rulesDiv.className = 'rules-list';
 
   let count = 0;
-  RULES.forEach((rule, i) => {
+  RULES.forEach((rule) => {
     if (activeSec !== 'all' && rule.sec !== activeSec) return;
     if (q) {
       const blob = [
@@ -83,11 +88,11 @@ export function render() {
       if (!blob.includes(q)) return;
     }
     count++;
-    rulesDiv.appendChild(buildCard(rule, i));
+    rulesDiv.appendChild(buildCard(rule));
   });
 
   if (count === 0) {
-    rulesDiv.innerHTML = `<div class="empty-state">Ничего не найдено</div>`;
+    rulesDiv.innerHTML = '<div class="empty-state">Ничего не найдено</div>';
   }
 
   container.appendChild(rulesDiv);
@@ -98,7 +103,8 @@ export function render() {
   if (lc) lc.textContent = learned.size;
   if (tc) tc.textContent = RULES.length;
   if (pf)
-    pf.style.width = ((learned.size / RULES.length) * 100).toFixed(1) + '%';
+    pf.style.width =
+      ((learned.size / (RULES.length || 1)) * 100).toFixed(1) + '%';
 }
 
 export function initNavFilter() {

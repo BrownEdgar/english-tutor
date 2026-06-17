@@ -1,11 +1,11 @@
 import '../shared/design-system.css';
 import './styles.css';
 import { mountNav } from '../shared/ui.js';
-import { render, initNavFilter } from './app.js';
+import { withDataLoader } from '../shared/loader.js';
+import { loadRules, render, initNavFilter } from './app.js';
 
-mountNav({
-  title: 'English Rules',
-  backHref: 'index.html',
-});
+const dataRoot = document.getElementById('sections');
+
+mountNav({ title: 'English Rules', backHref: 'index.html' });
 initNavFilter();
-render();
+withDataLoader(dataRoot, loadRules).then(render);

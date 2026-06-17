@@ -1,11 +1,16 @@
-import { data } from './data.js';
 import { loadSet, saveSet } from '../shared/storage.js';
+import { contentService } from '../shared/content-service.js';
 
 let learned = loadSet('phrasal');
 let currentCat = 'all';
+let data = [];
 
 function save() {
   saveSet('phrasal', learned);
+}
+
+export async function loadPhrasal() {
+  data = await contentService.fetchPhrasal();
 }
 
 export function render() {
@@ -13,7 +18,7 @@ export function render() {
   const grid = document.getElementById('grid');
   grid.replaceChildren();
 
-  data.forEach((item, i) => {
+  data.forEach((item) => {
     if (currentCat !== 'all' && item.cat !== currentCat) return;
     const searchText =
       item.base +
@@ -21,7 +26,8 @@ export function render() {
     if (q && !searchText.toLowerCase().includes(q)) return;
 
     const card = document.createElement('div');
-    card.className = 'card phrasal-card' + (learned.has(i) ? ' learned' : '');
+    card.className =
+      'card phrasal-card' + (learned.has(item.id) ? ' learned' : '');
     card.dataset.cat = item.cat;
 
     const catNames = {
@@ -36,7 +42,7 @@ export function render() {
 
     const formsBlock =
       item.type === 'phrasal'
-        ? `<div class="phrasal-group">${item.forms
+        ? `<div class="phrasal-group">${(item.forms || [])
             .map(
               (f) =>
                 `<div class="phrasal-row">
@@ -46,16 +52,19 @@ export function render() {
         </div>`
             )
             .join('')}</div>`
-        : `<div class="example-block">${item.ex}</div>`;
+        : `<div class="example-block">${item.ex || ''}</div>`;
 
-    const markup = `<div class="cat-label badge">${badgeLabel}</div>
+    card.insertAdjacentHTML(
+      'beforeend',
+      `
+      <div class="cat-label badge">${badgeLabel}</div>
       <div class="word-main">${item.base}</div>
-      <div class="word-ru">${item.base_ru}</div>${formsBlock}`;
+      <div class="word-ru">${item.base_ru}</div>${formsBlock}`
+    );
 
-    card.insertAdjacentHTML('beforeend', markup);
     card.onclick = () => {
-      if (learned.has(i)) learned.delete(i);
-      else learned.add(i);
+      if (learned.has(item.id)) learned.delete(item.id);
+      else learned.add(item.id);
       save();
       render();
     };
@@ -65,7 +74,7 @@ export function render() {
   document.getElementById('lc').textContent = learned.size;
   document.getElementById('tc').textContent = data.length;
   document.getElementById('pf').style.width =
-    (learned.size / data.length) * 100 + '%';
+    (data.length ? (learned.size / data.length) * 100 : 0) + '%';
 }
 
 export function initFilters() {

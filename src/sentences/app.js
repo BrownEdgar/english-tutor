@@ -1,6 +1,11 @@
-import { SENTENCES } from './data.js';
+import { contentService } from '../shared/content-service.js';
 
 const STORAGE_KEY = 'en_app_sentences_custom';
+let SENTENCES = [];
+
+export async function loadSentences() {
+  SENTENCES = await contentService.fetchSentences();
+}
 
 function loadCustom() {
   try {
@@ -18,7 +23,6 @@ function saveCustom(list) {
 function applyHighlights(text, words) {
   if (!words || !words.length) return text;
   let result = text;
-  // each entry is either "word" (string) or ["word", "armenian translation"]
   [...words]
     .sort((a, b) => {
       const wa = Array.isArray(a) ? a[0] : a;
@@ -81,7 +85,7 @@ function buildTable(customList) {
     tr.className = 'sent-row';
     tr.innerHTML = `
       <td class="sent-num">${item.id}</td>
-      <td class="sent-en">${applyHighlights(item.en, item.hl)}</td>
+      <td class="sent-en">${applyHighlights(item.en, item.hl || [])}</td>
       <td class="sent-am">${item.am || ''}</td>
       <td></td>
     `;
@@ -93,7 +97,7 @@ function buildTable(customList) {
     tr.className = 'sent-row sent-row--custom';
     tr.innerHTML = `
       <td class="sent-num">${item.id}</td>
-      <td class="sent-en">${applyHighlights(item.en, item.hl)}</td>
+      <td class="sent-en">${applyHighlights(item.en, item.hl || [])}</td>
       <td class="sent-am">${item.am || ''}</td>
       <td class="sent-del">
         <button class="sent-del-btn" data-idx="${localIdx}" aria-label="Удалить">✕</button>
@@ -147,8 +151,8 @@ function initForm() {
     const custom = loadCustom();
     const maxId = Math.max(
       ...SENTENCES.map((s) => s.id),
-      ...custom.map((s) => s.id),
-      127
+      ...custom.map((s) => s.id || 0),
+      0
     );
 
     custom.push({
@@ -171,64 +175,7 @@ function initForm() {
   });
 }
 
-function initSyncButton() {
-  if (!import.meta.env.DEV) return;
-
-  const form = document.getElementById('sent-form');
-  const submitBtn = form.querySelector('.sent-submit');
-
-  const wrap = document.createElement('div');
-  wrap.className = 'sent-form-actions';
-  submitBtn.parentNode.insertBefore(wrap, submitBtn);
-  wrap.appendChild(submitBtn);
-
-  const syncBtn = document.createElement('button');
-  syncBtn.type = 'button';
-  syncBtn.className = 'btn sent-sync-btn';
-  syncBtn.textContent = 'Sync → data.js';
-  wrap.appendChild(syncBtn);
-
-  syncBtn.addEventListener('click', async () => {
-    const custom = loadCustom();
-    if (!custom.length) {
-      syncBtn.textContent = 'Нечего синхронизировать';
-      setTimeout(() => (syncBtn.textContent = 'Sync → data.js'), 2000);
-      return;
-    }
-
-    syncBtn.disabled = true;
-    syncBtn.textContent = 'Синхронизация…';
-
-    try {
-      const res = await fetch('/api/sentences-sync', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(custom),
-      });
-      const data = await res.json();
-
-      if (res.ok && data.synced > 0) {
-        saveCustom([]);
-        buildTable([]);
-        syncBtn.textContent = `✓ Добавлено в data.js: ${data.synced}`;
-        syncBtn.classList.add('sent-sync-btn--ok');
-      } else if (data.error) {
-        syncBtn.textContent = `Ошибка: ${data.error}`;
-      }
-    } catch (err) {
-      syncBtn.textContent = `Ошибка: ${err.message}`;
-    } finally {
-      syncBtn.disabled = false;
-      setTimeout(() => {
-        syncBtn.textContent = 'Sync → data.js';
-        syncBtn.classList.remove('sent-sync-btn--ok');
-      }, 3000);
-    }
-  });
-}
-
 export function initPage() {
   buildTable(loadCustom());
   initForm();
-  initSyncButton();
 }

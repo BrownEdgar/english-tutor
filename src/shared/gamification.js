@@ -253,7 +253,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: 'Can I pick your brain for a minute?',
-    hy: 'Kkay mu vayrkyan khanutsel dzez kizh harc tayl?',
+    hy: 'Կարող եմ մեկ րոպե զբաղեցնել քեզ: Մի րոպե կարելի է Ձեզ',
     level: 'C1',
     tip: 'Means "may I ask for your expert opinion/advice?" Very common in professional settings.',
     armenianNote:
@@ -261,7 +261,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: "I'm on the fence about it.",
-    hy: 'Yet voroshum em ays masin:',
+    hy: 'Ես կասկածում եմ այդ հարցի շուրջ:',
     level: 'B2',
     tip: "Means you haven't made a decision yet / you're undecided.",
     armenianNote:
@@ -269,7 +269,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: 'It went in one ear and out the other.',
-    hy: 'Mi levazum mntsets, mekin lavazun yrets:',
+    hy: 'Մեկ ականջով մտավ, մյուսով դուրս եկավ:',
     level: 'B2',
     tip: "Means information wasn't absorbed or remembered at all.",
     armenianNote:
@@ -277,7 +277,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: "I'll get back to you on that.",
-    hy: 'Aysor vershaberi dzez kayel em:',
+    hy: 'Ես հետ կզանգեմ քեզ այդ հարցի վերաբերյալ:',
     level: 'B1',
     tip: 'Professional way to say "I need time to answer, I\'ll respond later."',
     armenianNote:
@@ -285,7 +285,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: 'She gave a compelling argument.',
-    hy: 'Na shad hamozich pastarkelutyun bere:',
+    hy: 'նա շատ համոզիչ արգումենտ տվեց:',
     level: 'C1',
     tip: '"Compelling" = very convincing, interesting. Elevated academic/professional vocab.',
     armenianNote:
@@ -293,7 +293,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: "Don't beat around the bush.",
-    hy: 'Mer baner mи asek ughigh:',
+    hy: 'Այսկողմ այնկողմ էլ մի գնա...:',
     level: 'B2',
     tip: 'Means: stop avoiding the main point and say what you really mean.',
     armenianNote:
@@ -301,7 +301,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: 'She speaks fluent English.',
-    hy: 'Na xosum e angleren herrum:',
+    hy: 'Նա շատ ազատ է խոսում անգլերեն:',
     level: 'A2',
     tip: 'Notice the word order: speaks + fluent + language. NOT "She fluent English speaks."',
     armenianNote:
@@ -309,7 +309,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: 'I was wondering if you could help me.',
-    hy: 'Mer mтаtsum ei, ari el karoch es indzh odzanel:',
+    hy: 'Ես ուզում էի իմանալ, դուք կարող եք օգնել ինձ:',
     level: 'B1',
     tip: '"I was wondering if..." is the most polite way to make a request. Much softer than "Can you help me?"',
     armenianNote:
@@ -317,7 +317,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: "That's easier said than done.",
-    hy: "Asel asvel e, bayts anelov dur ch'e:",
+    hy: 'Ավելի հեշտ է ասել քան անել:',
     level: 'B1',
     tip: 'Use this when someone suggests something simple but the reality is more difficult.',
     armenianNote:
@@ -325,7 +325,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: "I can't make heads or tails of this.",
-    hy: 'Vers chers voch mek ban haskanum em:',
+    hy: 'Ես չեմ կարող հասկանալ ինչումն է բանը:',
     level: 'C1',
     tip: "Means you can't understand or make sense of something at all.",
     armenianNote:
@@ -333,7 +333,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: "We're in the same boat.",
-    hy: 'Menk nuyн vichakum enk:',
+    hy: 'Մենք նույն նավակում ենք:',
     level: 'B1',
     tip: 'Means two or more people are in the same difficult situation.',
     armenianNote:
@@ -341,7 +341,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: "On second thought, let's go for it.",
-    hy: 'Verakardzelov, arеnk ays gdrenk:',
+    hy: 'Եթե լավ մտածենք, եկեք անենք այդ:',
     level: 'B2',
     tip: '"On second thought" = after reconsidering. Shows you changed your mind.',
     armenianNote:
@@ -349,15 +349,15 @@ export const DAILY_PHRASES = [
   },
   {
     en: "You've got a lot on your plate.",
-    hy: 'Qez shad ban ka anelov:',
+    hy: 'Դուք շատ բաներ/գորշեր ունեք անելու:',
     level: 'B1',
     tip: 'Means someone has many responsibilities or tasks right now.',
     armenianNote:
       'Plate = food metaphor for workload. Very visual idiom — great for A2+ learners to memorise.',
   },
   {
-    en: "I'll take it with a grain of salt.",
-    hy: 'Ays chi havatam lriv:',
+    en: "If not, I'll take it with me.",
+    hy: 'Եթե ոչ, ես այն կվերցնեմ ինձ հետ:',
     level: 'C1',
     tip: "Means you're sceptical about some information and won't fully believe it.",
     armenianNote:
@@ -365,7 +365,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: "Let's call it a day.",
-    hy: 'Avartachenk aydorhva hamar:',
+    hy: 'Ավարտենք այս օրվա համար: Այսորվա համար այսքանը',
     level: 'A2',
     tip: "Means: let's stop working / finish for today. Perfect phrase to end a meeting or class.",
     armenianNote:

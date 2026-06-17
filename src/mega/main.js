@@ -1,8 +1,11 @@
 import '../shared/design-system.css';
 import './styles.css';
 import { mountNav } from '../shared/ui.js';
-import { render, initFilters } from './app.js';
+import { withDataLoader } from '../shared/loader.js';
+import { loadMega, render, initFilters } from './app.js';
+
+const dataRoot = document.getElementById('grid');
 
 mountNav({ title: 'A+B+C English 400+', backHref: 'index.html' });
 initFilters();
-render();
+withDataLoader(dataRoot, loadMega).then(render);

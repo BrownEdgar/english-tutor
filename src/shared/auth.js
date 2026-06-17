@@ -1,31 +1,38 @@
 import './auth.css';
+import { api } from './api.js';
 
-const VALID_LOGIN = import.meta.env.VITE_ADMIN_LOGIN;
-const VALID_PASS = import.meta.env.VITE_ADMIN_PASSWORD;
-const SESSION_KEY = 'app_auth';
+// Token is stored in sessionStorage so it's cleared when the tab closes.
+const TOKEN_KEY = 'app_token';
 
-export function isLoggedIn() {
-  return sessionStorage.getItem(SESSION_KEY) === '1';
+export function getToken() {
+  return sessionStorage.getItem(TOKEN_KEY);
 }
 
-function setLoggedIn(value) {
-  if (value) sessionStorage.setItem(SESSION_KEY, '1');
-  else sessionStorage.removeItem(SESSION_KEY);
+export function isLoggedIn() {
+  return !!getToken();
+}
+
+function setToken(token) {
+  if (token) sessionStorage.setItem(TOKEN_KEY, token);
+  else sessionStorage.removeItem(TOKEN_KEY);
   window.dispatchEvent(
-    new CustomEvent('auth-change', { detail: { loggedIn: value } })
+    new CustomEvent('auth-change', { detail: { loggedIn: !!token } })
   );
 }
 
 export function logout() {
-  setLoggedIn(false);
+  setToken(null);
 }
 
-function attemptLogin(login, pass) {
-  if (login === VALID_LOGIN && pass === VALID_PASS) {
-    setLoggedIn(true);
+// Calls POST /auth/login. Returns true on success, false on wrong credentials.
+async function attemptLogin(email, password) {
+  try {
+    const result = await api.post('/api/v1/auth/login', { email, password });
+    setToken(result.token);
     return true;
+  } catch (err) {
+    return false;
   }
-  return false;
 }
 
 /* ── Modal ── */
@@ -45,8 +52,8 @@ function createModal() {
       <div class="login-modal-sub">Только для администратора</div>
       <form class="login-modal-form" id="login-form" novalidate>
         <div class="login-field">
-          <label class="login-field-label" for="login-input">Логин</label>
-          <input id="login-input" class="login-field-input" type="text" autocomplete="username" placeholder="admin" required />
+          <label class="login-field-label" for="login-input">Email</label>
+          <input id="login-input" class="login-field-input" type="email" autocomplete="username" placeholder="admin@example.com" required />
         </div>
         <div class="login-field">
           <label class="login-field-label" for="pass-input">Пароль</label>
@@ -60,16 +67,25 @@ function createModal() {
   `;
   document.body.appendChild(overlay);
 
-  overlay.querySelector('#login-form').addEventListener('submit', (e) => {
+  overlay.querySelector('#login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const login = overlay.querySelector('#login-input').value.trim();
+    const email = overlay.querySelector('#login-input').value.trim();
     const pass = overlay.querySelector('#pass-input').value;
     const err = overlay.querySelector('#login-error');
+    const submitBtn = overlay.querySelector('.login-btn-submit');
 
-    if (attemptLogin(login, pass)) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Вход...';
+
+    const ok = await attemptLogin(email, pass);
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Войти';
+
+    if (ok) {
       closeModal();
     } else {
-      err.textContent = 'Неверный логин или пароль.';
+      err.textContent = 'Неверный email или пароль.';
       overlay.querySelector('#pass-input').value = '';
       overlay.querySelector('#pass-input').focus();
     }
@@ -97,8 +113,8 @@ function openModal() {
 
 function closeModal() {
   overlay?.classList.remove('visible');
-  overlay?.querySelector('#login-error') &&
-    (overlay.querySelector('#login-error').textContent = '');
+  const errEl = overlay?.querySelector('#login-error');
+  if (errEl) errEl.textContent = '';
 }
 
 /* ── Auth button ── */

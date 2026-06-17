@@ -1,7 +1,10 @@
 import '../shared/design-system.css';
 import './styles.css';
 import { mountNav } from '../shared/ui.js';
-import { initPage } from './app.js';
+import { withDataLoader } from '../shared/loader.js';
+import { loadSentences, initPage } from './app.js';
 
-mountNav({ title: '127+ предложений', backHref: 'index.html' });
-initPage();
+const dataRoot = document.getElementById('sent-table-wrap');
+
+mountNav({ title: '157+ предложений', backHref: 'index.html' });
+withDataLoader(dataRoot, loadSentences).then(initPage);

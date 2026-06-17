@@ -1,4 +1,3 @@
-import { words } from './data.js';
 import {
   loadSet,
   saveSet,
@@ -6,12 +5,27 @@ import {
   saveCustomWords,
 } from '../shared/storage.js';
 import { renderGrid } from './render.js';
+import { api } from '../shared/api.js';
+import { contentService } from '../shared/content-service.js';
+import { getToken } from '../shared/auth.js';
 
 let learnedSet = loadSet('top500');
 let currentCat = 'all';
+let words = [];
+let customWords = loadCustomWords();
 
 function mergedList() {
-  return words.concat(loadCustomWords());
+  return words.concat(customWords);
+}
+
+export async function loadWords() {
+  const token = getToken();
+  const { words: list, customWords: serverCustom } = await contentService.fetchWords();
+  words = list;
+  if (token && serverCustom.length) {
+    customWords = serverCustom;
+    saveCustomWords(customWords);
+  }
 }
 
 export function redraw() {
@@ -24,6 +38,18 @@ export function redraw() {
       else learnedSet.add(key);
       saveSet('top500', learnedSet);
       redraw();
+    },
+    onDelete: async (wordId) => {
+      const token = getToken();
+      if (!token) return;
+      try {
+        await api.del(`/api/v1/words/${wordId}`, token);
+        customWords = customWords.filter((w) => w.id !== wordId);
+        saveCustomWords(customWords);
+        redraw();
+      } catch (err) {
+        alert(`Не удалось удалить слово: ${err.message}`);
+      }
     },
   });
 }
@@ -79,44 +105,57 @@ export function initAddWord() {
         enError.textContent = '';
         return;
       }
-      const custom = loadCustomWords();
-      const allWords = [...words, ...custom];
-      const duplicate = allWords.find(
-        (w) => w.en.toLowerCase() === val.toLowerCase()
-      );
-      enError.textContent = duplicate
-        ? `Слово "${val}" уже есть в списке.`
-        : '';
+      const all = mergedList();
+      const dup = all.find((w) => w.en.toLowerCase() === val.toLowerCase());
+      enError.textContent = dup ? `Слово "${val}" уже есть в списке.` : '';
     });
     enInput.addEventListener('input', () => {
       enError.textContent = '';
     });
   }
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const fd = new FormData(form);
-    const levelVal = String(fd.get('level') || 'B1').trim();
     const entry = {
       en: String(fd.get('en') || '').trim(),
       ru: String(fd.get('ru') || '').trim(),
       hy: String(fd.get('hy') || '').trim(),
       ex: String(fd.get('ex') || '').trim(),
       exhy: String(fd.get('exhy') || '').trim(),
-      cat: levelVal === 'dev' ? 'dev' : 'general',
+      ipa: String(fd.get('ipa') || '').trim(),
+      level: String(fd.get('level') || 'B1').trim(),
     };
-    if (levelVal !== 'dev') entry.level = levelVal;
-    const ipaRaw = String(fd.get('ipa') || '').trim();
-    if (ipaRaw) entry.ipa = ipaRaw;
+
     if (!entry.en || !entry.ru || !entry.ex) {
       alert('Заполните поля: English, перевод, пример.');
       return;
     }
-    const custom = loadCustomWords();
-    custom.push(entry);
-    saveCustomWords(custom);
-    form.reset();
-    closePanel();
-    redraw();
+
+    const token = getToken();
+    const submitBtn = form.querySelector('[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    try {
+      if (token) {
+        const created = await api.post('/api/v1/words', entry, token);
+        customWords.push(created);
+        saveCustomWords(customWords);
+      } else {
+        customWords.push(entry);
+        saveCustomWords(customWords);
+      }
+      form.reset();
+      closePanel();
+      redraw();
+    } catch (err) {
+      if (err.status === 409) {
+        enError.textContent = `Слово "${entry.en}" уже есть в базе данных.`;
+      } else {
+        alert(`Ошибка: ${err.message}`);
+      }
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
   });
 }

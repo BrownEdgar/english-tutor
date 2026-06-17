@@ -1,15 +1,20 @@
-import { DATA } from './data.js';
 import { loadSet, saveSet } from '../shared/storage.js';
+import { contentService } from '../shared/content-service.js';
 
 const learned = loadSet('mega');
 const activeLevels = new Set(['A', 'B', 'C']);
 let activeCat = 'all';
+let DATA = [];
 
 function save() {
   saveSet('mega', learned);
 }
 
-function matches(item, i) {
+export async function loadMega() {
+  DATA = await contentService.fetchMega();
+}
+
+function matches(item) {
   const q = document.getElementById('search').value.toLowerCase();
   if (!activeLevels.has(item.lv)) return false;
   if (activeCat !== 'all' && item.cat !== activeCat) return false;
@@ -19,7 +24,7 @@ function matches(item, i) {
     item.ru,
     item.hy,
     item.type === 'phrasal'
-      ? item.forms.map((f) => f.w + f.ru + f.hy).join(' ')
+      ? (item.forms || []).map((f) => f.w + f.ru + f.hy).join(' ')
       : item.ex,
   ]
     .join(' ')
@@ -38,9 +43,9 @@ const catColors = {
   formal: '#ec4899',
 };
 
-function renderCard(item, i) {
+function renderCard(item) {
   const card = document.createElement('div');
-  card.className = 'card mega-card' + (learned.has(i) ? ' done' : '');
+  card.className = 'card mega-card' + (learned.has(item.id) ? ' done' : '');
 
   const pipColor = catColors[item.cat] || '#666';
   let inner = `<div class="cat-pip" style="background:${pipColor}"></div>`;
@@ -58,7 +63,7 @@ function renderCard(item, i) {
 
   if (item.type === 'phrasal') {
     inner += `<div class="forms">`;
-    item.forms.forEach((f) => {
+    (item.forms || []).forEach((f) => {
       inner += `<div class="form-row">
         <div>
           <div class="f-word">${f.w}</div>
@@ -79,8 +84,8 @@ function renderCard(item, i) {
 
   card.innerHTML = inner;
   card.onclick = () => {
-    if (learned.has(i)) learned.delete(i);
-    else learned.add(i);
+    if (learned.has(item.id)) learned.delete(item.id);
+    else learned.add(item.id);
     save();
     render();
   };
@@ -91,15 +96,15 @@ export function render() {
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
   let shown = 0;
-  DATA.forEach((item, i) => {
-    if (!matches(item, i)) return;
+  DATA.forEach((item) => {
+    if (!matches(item)) return;
     shown++;
-    grid.appendChild(renderCard(item, i));
+    grid.appendChild(renderCard(item));
   });
   document.getElementById('shown').textContent = shown;
   document.getElementById('lc').textContent = learned.size;
   document.getElementById('pf').style.width =
-    ((learned.size / DATA.length) * 100).toFixed(1) + '%';
+    ((learned.size / (DATA.length || 1)) * 100).toFixed(1) + '%';
 }
 
 export function initFilters() {

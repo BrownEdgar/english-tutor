@@ -1,13 +1,16 @@
 import '../shared/design-system.css';
 import './styles.css';
 import { mountNav } from '../shared/ui.js';
-import { redraw, initFilters, initAddWord } from './app.js';
+import { withDataLoader } from '../shared/loader.js';
+import { loadWords, redraw, initFilters, initAddWord } from './app.js';
 import { isLoggedIn } from '../shared/auth.js';
+
+const dataRoot = document.getElementById('grid');
 
 mountNav({ title: 'ТОП 500+ слов', backHref: 'index.html' });
 initFilters();
 initAddWord();
-redraw();
+withDataLoader(dataRoot, loadWords).then(redraw);
 
 function syncAddWordBtn() {
   const btn = document.getElementById('btn-add-word');
@@ -16,4 +19,7 @@ function syncAddWordBtn() {
 }
 
 syncAddWordBtn();
-window.addEventListener('auth-change', syncAddWordBtn);
+window.addEventListener('auth-change', () => {
+  syncAddWordBtn();
+  withDataLoader(dataRoot, loadWords).then(redraw);
+});

@@ -1,3 +1,6 @@
+import { api } from './api.js';
+import { getToken } from './auth.js';
+
 const KEYS = {
   rules: 'en_app_rules_learned',
   mega: 'en_app_mega_learned',
@@ -20,6 +23,36 @@ export function loadSet(section) {
 
 export function saveSet(section, set) {
   localStorage.setItem(KEYS[section], JSON.stringify([...set]));
+
+  // Fire-and-forget sync to the backend when logged in.
+  // We don't await this — the UI updates instantly via localStorage,
+  // and the server sync happens in the background.
+  const token = getToken();
+  if (token) {
+    api
+      .put(`/api/v1/progress/${section}`, { learnedIds: [...set] }, token)
+      .catch(() => {
+        // Sync failure is silent — localStorage is the source of truth locally.
+        // On next login the user's localStorage and server will be reconciled.
+      });
+  }
+}
+
+// Call this on page load when the user is authenticated to pull their
+// server-side progress and merge it with what's in localStorage (union).
+export async function syncProgressFromServer(section) {
+  const token = getToken();
+  if (!token) return;
+
+  try {
+    const result = await api.get(`/api/v1/progress/${section}`, token);
+    const local = loadSet(section);
+    // Union: keep everything from both localStorage and server
+    result.learnedIds.forEach((id) => local.add(id));
+    localStorage.setItem(KEYS[section], JSON.stringify([...local]));
+  } catch {
+    // Server unreachable — keep using localStorage only
+  }
 }
 
 export function loadCustomWords() {

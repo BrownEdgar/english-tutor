@@ -4,16 +4,19 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+
 .phrasal-header h1 {
   font-size: clamp(22px, 4vw, 36px);
   font-weight: 800;
   line-height: 1.2;
   color: var(--text);
 }
+
 .phrasal-header h1 em {
   font-style: normal;
   color: var(--accent);
 }
+
 .phrasal-header .subtitle {
   font-size: 13px;
   color: var(--text-2);
@@ -30,6 +33,7 @@
   margin: 0 16px 8px;
   max-width: calc(1200px - 32px);
 }
+
 .phrasal-tip strong {
   color: var(--accent);
 }
@@ -60,9 +64,11 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+
 .phrasal-stats strong {
   color: var(--text);
 }
+
 .phrasal-stats .progress-bar {
   flex: 1;
 }
@@ -91,6 +97,7 @@
   color: var(--text);
   margin-bottom: 2px;
 }
+
 .word-ru {
   font-size: 13px;
   color: var(--text-2);
@@ -102,6 +109,7 @@
   flex-direction: column;
   gap: 8px;
 }
+
 .phrasal-row {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -112,16 +120,19 @@
   border-radius: var(--radius-sm);
   font-size: 13px;
 }
+
 .ph-word {
   grid-row: 1;
   font-weight: 700;
   color: var(--accent);
   font-family: 'JetBrains Mono', monospace;
 }
+
 .ph-meaning {
   grid-row: 1;
   color: var(--text-2);
 }
+
 .ph-example {
   grid-column: 1 / -1;
   grid-row: 2;
@@ -129,6 +140,7 @@
   font-style: italic;
   font-size: 12px;
 }
+
 .example-block {
   font-size: 13px;
   color: var(--text-2);
