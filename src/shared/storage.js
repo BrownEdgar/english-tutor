@@ -55,6 +55,10 @@ export async function syncProgressFromServer(section) {
   }
 }
 
+export function saveLocalOnly(section, set) {
+  localStorage.setItem(KEYS[section], JSON.stringify([...set]));
+}
+
 export function loadCustomWords() {
   try {
     const raw = JSON.parse(localStorage.getItem(KEYS.top500c) || '[]');

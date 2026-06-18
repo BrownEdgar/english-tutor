@@ -44,11 +44,13 @@ function speak(text, rate = 0.9) {
     if (v) utter.voice = v;
     window.speechSynthesis.speak(utter);
   };
-  if (window.speechSynthesis.getVoices().length) go();
-  else
+  if (window.speechSynthesis.getVoices().length) {
+    go();
+  } else {
     window.speechSynthesis.addEventListener('voiceschanged', go, {
       once: true,
     });
+  }
 }
 
 // ─── Card grid ────────────────────────────────────────────────────────────────

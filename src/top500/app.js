@@ -1,6 +1,8 @@
 import {
   loadSet,
   saveSet,
+  saveLocalOnly,
+  syncProgressFromServer,
   loadCustomWords,
   saveCustomWords,
 } from '../shared/storage.js';
@@ -20,11 +22,18 @@ function mergedList() {
 
 export async function loadWords() {
   const token = getToken();
-  const { words: list, customWords: serverCustom } = await contentService.fetchWords();
+  const { words: list, customWords: serverCustom } =
+    await contentService.fetchWords();
   words = list;
   if (token && serverCustom.length) {
     customWords = serverCustom;
     saveCustomWords(customWords);
+  }
+
+  // Загружаем learned-состояние с бэкенда и обновляем learnedSet
+  if (token) {
+    await syncProgressFromServer('top500');
+    learnedSet = loadSet('top500');
   }
 }
 
@@ -33,10 +42,29 @@ export function redraw() {
     list: mergedList(),
     learnedSet,
     currentCat,
-    onLearnToggle(key) {
-      if (learnedSet.has(key)) learnedSet.delete(key);
-      else learnedSet.add(key);
-      saveSet('top500', learnedSet);
+    async onLearnToggle(key) {
+      const token = getToken();
+      if (token) {
+        try {
+          const { learned } = await api.patch(
+            '/api/v1/progress/top500/toggle',
+            { id: key },
+            token
+          );
+          if (learned) learnedSet.add(key);
+          else learnedSet.delete(key);
+          saveLocalOnly('top500', learnedSet);
+        } catch {
+          // сеть недоступна — fallback на локальное переключение
+          if (learnedSet.has(key)) learnedSet.delete(key);
+          else learnedSet.add(key);
+          saveSet('top500', learnedSet);
+        }
+      } else {
+        if (learnedSet.has(key)) learnedSet.delete(key);
+        else learnedSet.add(key);
+        saveSet('top500', learnedSet);
+      }
       redraw();
     },
     onDelete: async (wordId) => {

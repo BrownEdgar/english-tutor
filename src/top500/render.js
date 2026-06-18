@@ -75,7 +75,15 @@ export function renderGrid({ list, learnedSet, currentCat, onLearnToggle }) {
       speakCard(w);
     });
 
-    card.addEventListener('click', () => onLearnToggle(key));
+    card.addEventListener('click', async () => {
+      if (card.classList.contains('card--loading')) return;
+      card.classList.add('card--loading');
+      try {
+        await onLearnToggle(key);
+      } finally {
+        card.classList.remove('card--loading');
+      }
+    });
     grid.appendChild(card);
   });
 

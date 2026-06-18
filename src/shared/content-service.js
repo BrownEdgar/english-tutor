@@ -9,7 +9,8 @@ import { getToken } from './auth.js';
  */
 function listFromResponse(res) {
   if (Array.isArray(res)) return res;
-  if (res && typeof res === 'object' && Array.isArray(res.data)) return res.data;
+  if (res && typeof res === 'object' && Array.isArray(res.data))
+    return res.data;
   return [];
 }
 
@@ -84,7 +85,10 @@ export class ContentService {
   async fetchWords(limit = 1000) {
     const token = getToken();
     try {
-      const res = await api.get(`/api/v1/words?limit=${limit}`, token || undefined);
+      const res = await api.get(
+        `/api/v1/words?limit=${limit}`,
+        token || undefined
+      );
       return {
         words: listFromResponse(res),
         customWords: Array.isArray(res?.customWords) ? res.customWords : [],

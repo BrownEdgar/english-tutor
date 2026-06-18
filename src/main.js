@@ -68,7 +68,7 @@ const APPS = [
   {
     id: 'sentences',
     href: 'sentences.html',
-    title: '127+ Sentences',
+    title: '157+ Sentences',
     subtitle: 'There is/are · Phrasal verbs · Levels A–C',
     icon: '✍️',
     total: 127,
