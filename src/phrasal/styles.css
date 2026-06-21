@@ -1,3 +1,23 @@
+/* ── Masonry (dance) grid override for phrasal page ── */
+#grid.grid {
+  display: block;
+  columns: 3 300px;
+  column-gap: 12px;
+  padding: 16px;
+}
+
+#grid.grid .phrasal-card {
+  break-inside: avoid;
+  margin-bottom: 12px;
+  display: block;
+}
+
+@media (max-width: 700px) {
+  #grid.grid {
+    columns: 1;
+  }
+}
+
 /* Phrasal-specific styles */
 .phrasal-header {
   padding: 28px 16px 8px;
@@ -113,7 +133,7 @@
 .phrasal-row {
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto auto auto;
   gap: 2px 8px;
   padding: 8px 10px;
   background: var(--surface2);
@@ -139,6 +159,16 @@
   color: var(--text-3);
   font-style: italic;
   font-size: 12px;
+  display: block;
+}
+
+.ph-example.arm {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  color: var(--accent);
+  font-style: italic;
+  font-size: 12px;
+  opacity: 0.75;
 }
 
 .example-block {

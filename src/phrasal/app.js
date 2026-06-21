@@ -40,6 +40,7 @@ export function render() {
     };
     const badgeLabel = catNames[item.cat] || item.cat;
 
+    const baseLabel = item.base_hy ? `${item.base_hy}` : item.base_ru;
     const formsBlock =
       item.type === 'phrasal'
         ? `<div class="phrasal-group">${(item.forms || [])
@@ -47,19 +48,24 @@ export function render() {
               (f) =>
                 `<div class="phrasal-row">
           <span class="ph-word">${f.w}</span>
-          <span class="ph-meaning">— ${f.m}</span>
+         
+          <span class="ph-meaning">— ${f.mHy ? f.mHy : f.m}</span>
           <span class="ph-example">${f.ex}</span>
+          ${f.exHy ? `<span class="ph-example arm">${f.exHy}</span>` : ''}
         </div>`
             )
             .join('')}</div>`
-        : `<div class="example-block">${item.ex || ''}</div>`;
+        : `<div class="example-block">
+            <span class="ph-example">${item.forms?.[0]?.ex || ''}</span>
+            ${item.forms?.[0]?.exHy ? `<span class="ph-example arm">${item.forms[0].exHy}</span>` : ''}
+          </div>`;
 
     card.insertAdjacentHTML(
       'beforeend',
       `
       <div class="cat-label badge">${badgeLabel}</div>
       <div class="word-main">${item.base}</div>
-      <div class="word-ru">${item.base_ru}</div>${formsBlock}`
+      <div class="word-ru">${baseLabel}</div>${formsBlock}`
     );
 
     card.onclick = () => {
@@ -89,4 +95,9 @@ export function initFilters() {
       render();
     });
   });
+}
+
+// ete
+{
+  /* <span class="ph-meaning">— ${f.mHy ? f.mHy + ' / ' : ''}${f.m}</span> */
 }
