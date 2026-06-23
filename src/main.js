@@ -39,15 +39,6 @@ const APPS = [
     color: '#10b981',
   },
   {
-    id: 'phrasal',
-    href: 'phrasal.html',
-    title: '300+ Phrases & Chunks',
-    subtitle: 'Phrasal verbs + discourse B2–C1',
-    icon: '💬',
-    total: 471,
-    color: '#f97316',
-  },
-  {
     id: 'top500',
     href: 'top500.html',
     title: 'Top 500+ Words',
@@ -73,6 +64,15 @@ const APPS = [
     icon: '✍️',
     total: 127,
     color: '#0891b2',
+  },
+  {
+    id: 'phrases',
+    href: 'phrases.html',
+    title: '100 практических фраз',
+    subtitle: 'Everyday English · Armenian translations',
+    icon: '💬',
+    total: 100,
+    color: '#d97706',
   },
 ];
 

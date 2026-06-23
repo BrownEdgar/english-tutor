@@ -24,7 +24,9 @@ function matches(item) {
     item.ru,
     item.hy,
     item.type === 'phrasal'
-      ? (item.forms || []).map((f) => f.w + f.ru + f.hy).join(' ')
+      ? (item.forms || [])
+          .map((f) => f.w + f.ru + f.hy + (f.exHy || ''))
+          .join(' ')
       : item.ex,
   ]
     .join(' ')
@@ -74,6 +76,7 @@ function renderCard(item) {
           <div class="f-hy">🇦🇲 ${f.hy}</div>
         </div>
         <div class="f-ex">${f.ex}</div>
+        ${f.exHy ? `<div class="f-ex-hy">${f.exHy}</div>` : `<div class="f-ex-hy na">N/A</div>`}
       </div>`;
     });
     inner += `</div>`;

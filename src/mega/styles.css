@@ -4,6 +4,7 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+
 .mega-header h1 {
   font-size: clamp(22px, 4vw, 36px);
   font-weight: 800;
@@ -11,15 +12,19 @@
   line-height: 1.2;
   color: var(--text);
 }
+
 .mega-header h1 .accent {
   color: #6366f1;
 }
+
 .mega-header h1 .accent2 {
   color: #f97316;
 }
+
 .mega-header h1 .accent3 {
   color: #10b981;
 }
+
 .mega-header .sub {
   font-size: 13px;
   color: var(--text-2);
@@ -41,12 +46,14 @@
     background var(--t),
     border-color var(--t);
 }
+
 .ctrl-row {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
 }
+
 .ctrl-label {
   font-size: 11px;
   font-weight: 700;
@@ -55,6 +62,7 @@
   color: var(--text-3);
   white-space: nowrap;
 }
+
 .ctrl-chips {
   display: flex;
   gap: 5px;
@@ -67,11 +75,13 @@
   border-color: #22c55e;
   color: #fff;
 }
+
 .lv-btn-b.active {
   background: #f97316;
   border-color: #f97316;
   color: #fff;
 }
+
 .lv-btn-c.active {
   background: #8b5cf6;
   border-color: #8b5cf6;
@@ -89,9 +99,11 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+
 .mega-stats strong {
   color: var(--text);
 }
+
 .mega-stats .progress-bar {
   flex: 1;
 }
@@ -103,6 +115,7 @@
   overflow: hidden;
   cursor: pointer;
 }
+
 .mega-card.done {
   border-color: var(--green);
 }
@@ -131,14 +144,17 @@
   letter-spacing: 0.04em;
   flex-shrink: 0;
 }
+
 .lv-A {
   background: rgba(34, 197, 94, 0.15);
   color: #22c55e;
 }
+
 .lv-B {
   background: rgba(249, 115, 22, 0.15);
   color: #f97316;
 }
+
 .lv-C {
   background: rgba(139, 92, 246, 0.15);
   color: #8b5cf6;
@@ -149,18 +165,21 @@
   font-weight: 700;
   color: var(--text);
 }
+
 .word-tr {
   font-size: 12px;
   color: var(--text-3);
   font-family: 'JetBrains Mono', monospace;
   margin-top: 1px;
 }
+
 .word-langs {
   display: flex;
   gap: 8px;
   margin-top: 6px;
   flex-wrap: wrap;
 }
+
 .lang-ru,
 .lang-hy {
   font-size: 12px;
@@ -176,9 +195,11 @@
   color: var(--text-2);
   font-style: italic;
 }
+
 .b-ex {
   color: #f97316;
 }
+
 .c-ex {
   color: #8b5cf6;
 }
@@ -186,6 +207,7 @@
 .forms {
   padding: 0 14px 12px 18px;
 }
+
 .form-row {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -195,25 +217,43 @@
   border-top: 1px solid var(--border);
   font-size: 12px;
 }
+
 .f-word {
   font-weight: 700;
   color: var(--accent);
 }
+
 .f-tr {
   color: var(--text-3);
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
 }
+
 .f-meanings {
   display: flex;
   gap: 6px;
 }
+
 .f-ru,
 .f-hy {
   color: var(--text-2);
 }
+
 .f-ex {
   grid-column: 1 / -1;
   color: var(--text-3);
   font-style: italic;
+}
+
+.f-ex-hy {
+  grid-column: 1 / -1;
+  color: var(--text-3);
+  font-style: italic;
+  font-size: 0.82em;
+  opacity: 0.8;
+}
+
+.f-ex-hy.na {
+  opacity: 0.9;
+  color: var(--text-3);
 }

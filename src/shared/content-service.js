@@ -65,6 +65,11 @@ export class ContentService {
     return this.#fetchList('/api/v1/irregular-verbs', { limit });
   }
 
+  /** @param {number} [limit=200] */
+  fetchPhrases(limit = 200) {
+    return this.#fetchList('/api/v1/phrases', { limit });
+  }
+
   fetchConversations() {
     return this.#fetchList('/api/v1/conversations');
   }

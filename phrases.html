@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>100 практических фраз</title>
+</head>
+
+<body>
+
+  <div class="ph-page-hero">
+    <h1>100 практических <em>фраз</em></h1>
+    <p class="subtitle">Everyday English · Armenian translations</p>
+  </div>
+
+  <div class="ph-page-wrap">
+
+    <!-- Add / Edit form -->
+    <form class="ph-form card" id="ph-form" novalidate>
+      <div class="section-title" id="ph-form-title">Добавить фразу</div>
+      <input type="hidden" id="ph-edit-id">
+      <div class="ph-form-grid">
+        <div class="ph-field ph-field--full">
+          <label class="ph-label" for="ph-en">English phrase</label>
+          <textarea class="search-input ph-textarea" id="ph-en" rows="2"
+            placeholder="I tend to overthink things…" required></textarea>
+        </div>
+        <div class="ph-field">
+          <label class="ph-label" for="ph-hy">
+            Перевод (Հայերեն)
+            <span class="ph-label-hint">необязательно</span>
+          </label>
+          <input class="search-input" id="ph-hy"
+            placeholder="Ես հակված եմ…" autocomplete="off">
+        </div>
+        <div class="ph-field">
+          <label class="ph-label" for="ph-cat">
+            Тема
+            <span class="ph-label-hint">необязательно</span>
+          </label>
+          <input class="search-input" id="ph-cat"
+            placeholder="Работа, Здоровье…" autocomplete="off">
+        </div>
+      </div>
+      <div class="ph-form-actions">
+        <button class="btn btn-primary" type="submit" id="ph-submit">Добавить</button>
+        <button class="btn ph-cancel-btn" type="button" id="ph-cancel" style="display:none">Отмена</button>
+      </div>
+    </form>
+
+    <!-- Table injected by JS -->
+    <div id="ph-table-wrap"></div>
+
+  </div>
+
+  <script type="module" src="/src/phrases/main.js"></script>
+</body>
+
+</html>
