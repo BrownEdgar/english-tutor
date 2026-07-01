@@ -14,6 +14,7 @@ export default defineConfig({
         irregular:  resolve(__dirname, 'irregular.html'),
         sentences:     resolve(__dirname, 'sentences.html'),
         conversations: resolve(__dirname, 'conversations.html'),
+        phrases:       resolve(__dirname, 'phrases.html'),
       },
     },
   },

@@ -28,6 +28,7 @@ export const TAG_NAMES = {
   weather: 'погода',
   morality: 'мораль',
   architecture: 'архитектура',
+  adverb: 'наречия',
 };
 
 export const ALLOWED_CATS = Object.keys(TAG_NAMES);

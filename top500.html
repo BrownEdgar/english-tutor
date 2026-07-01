@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="ru" data-theme="light">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ТОП 500+ слов для старта</title>
+  <title>ТОП 1000+ слов для старта</title>
 </head>
+
 <body>
 
   <div class="top500-header">
     <div>
-      <h1>ТОП <span>500+</span> СЛОВ</h1>
-      <p class="subtitle">Кликай на карточку — отмечай выученное. IPA под словом. Иконка динамика — прослушать. При добавлении своего слова можно указать армянский перевод и пример (необязательно).</p>
+      <h1>ТОП <span>1000+</span> СЛОВ</h1>
+      <p class="subtitle">Кликай на карточку — отмечай выученное. IPA под словом. Иконка динамика — прослушать. При
+        добавлении своего слова можно указать армянский перевод и пример (необязательно).</p>
     </div>
-    <button type="button" class="btn-add-word" id="btn-add-word" aria-expanded="false" aria-controls="add-word-panel" hidden>
+    <button type="button" class="btn-add-word" id="btn-add-word" aria-expanded="false" aria-controls="add-word-panel"
+      hidden>
       + Добавить слово
     </button>
   </div>
@@ -26,16 +30,19 @@
       <form id="add-word-form" class="add-word-form">
         <div class="form-field">
           <label class="field-label" for="input-en">English <span class="required">*</span></label>
-          <input id="input-en" name="en" type="text" required autocomplete="off" placeholder="e.g. ambiguous" class="field-input" />
+          <input id="input-en" name="en" type="text" required autocomplete="off" placeholder="e.g. ambiguous"
+            class="field-input" />
           <span id="en-error" class="input-error"></span>
         </div>
         <div class="form-field">
           <label class="field-label" for="input-ipa">IPA <span class="optional">необяз.</span></label>
-          <input id="input-ipa" name="ipa" type="text" autocomplete="off" placeholder="[æmˈbɪɡjuəs]" class="field-input" />
+          <input id="input-ipa" name="ipa" type="text" autocomplete="off" placeholder="[æmˈbɪɡjuəs]"
+            class="field-input" />
         </div>
         <div class="form-field">
           <label class="field-label" for="input-ru">Перевод (RU) <span class="required">*</span></label>
-          <input id="input-ru" name="ru" type="text" required autocomplete="off" placeholder="e.g. неоднозначный" class="field-input" />
+          <input id="input-ru" name="ru" type="text" required autocomplete="off" placeholder="e.g. неоднозначный"
+            class="field-input" />
         </div>
         <div class="form-field">
           <label class="field-label" for="input-level">Уровень</label>
@@ -51,20 +58,27 @@
         </div>
         <div class="form-field form-field--wide">
           <label class="field-label" for="input-hy">Перевод (Հայերեն) <span class="optional">необяз.</span></label>
-          <input id="input-hy" name="hy" type="text" autocomplete="off" lang="hy" placeholder="e.g. երկիմաստ" class="field-input" />
+          <input id="input-hy" name="hy" type="text" autocomplete="off" lang="hy" placeholder="e.g. երկիմաստ"
+            class="field-input" />
         </div>
         <div class="form-field form-field--wide">
           <label class="field-label" for="input-ex">Пример (English) <span class="required">*</span></label>
-          <input id="input-ex" name="ex" type="text" required autocomplete="off" lang="en" placeholder="e.g. The instructions were ambiguous." class="field-input" />
+          <input id="input-ex" name="ex" type="text" required autocomplete="off" lang="en"
+            placeholder="e.g. The instructions were ambiguous." class="field-input" />
         </div>
         <div class="form-field form-field--wide">
           <label class="field-label" for="input-exhy">Пример (Հայերեն) <span class="optional">необяз.</span></label>
-          <textarea id="input-exhy" name="exhy" rows="2" autocomplete="off" lang="hy" placeholder="Армянский вариант того же примера — на отдельной строке под английским." class="field-input field-textarea"></textarea>
+          <textarea id="input-exhy" name="exhy" rows="2" autocomplete="off" lang="hy"
+            placeholder="Армянский вариант того же примера — на отдельной строке под английским."
+            class="field-input field-textarea"></textarea>
         </div>
         <div class="form-actions">
           <button type="submit" class="btn-submit-word">
             <span>Сохранить</span>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
           </button>
         </div>
       </form>
@@ -81,6 +95,7 @@
       <button class="filter-btn" data-cat="B2">B2</button>
       <button class="filter-btn" data-cat="C1">C1</button>
       <button class="filter-btn" data-cat="C2">C2</button>
+      <button class="filter-btn" data-cat="must have">⭐ must have</button>
       <button class="filter-btn" data-cat="dev">Developer</button>
     </div>
     <div class="top500-search">
@@ -90,11 +105,47 @@
 
   <div class="top500-stats">
     <span>Выучено: <strong id="learned-count">0</strong> / <strong id="total-count">0</strong></span>
-    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress"></div>
+    </div>
+    <div class="view-toggle">
+      <button class="view-btn active" id="btn-view-cards" data-view="cards" title="Карточки">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+          <rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+          <rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+          <rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+        </svg>
+      </button>
+      <button class="view-btn" id="btn-view-table" data-view="table" title="Таблица">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <rect x="1" y="1" width="14" height="3" rx="1" stroke="currentColor" stroke-width="1.5" />
+          <rect x="1" y="6" width="14" height="3" rx="1" stroke="currentColor" stroke-width="1.5" />
+          <rect x="1" y="11" width="14" height="3" rx="1" stroke="currentColor" stroke-width="1.5" />
+        </svg>
+      </button>
+    </div>
   </div>
 
   <div class="grid" id="grid"></div>
+  <div class="word-table-wrap" id="word-table-wrap" hidden>
+    <table class="word-table" id="word-table">
+      <thead>
+        <tr>
+          <th class="col-num">#</th>
+          <th data-sort="en">English</th>
+          <th data-sort="ipa">IPA</th>
+          <th data-sort="hy">Հայerен/русский</th>
+          <th data-sort="ex">Example</th>
+          <th data-sort="exhy">Հայerен թargmanutyun</th>
+          <th class="col-edit"></th>
+        </tr>
+      </thead>
+      <tbody id="word-table-body"></tbody>
+    </table>
+  </div>
 
   <script type="module" src="/src/top500/main.js"></script>
 </body>
+
 </html>

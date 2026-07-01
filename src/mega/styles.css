@@ -220,6 +220,7 @@
 
 .f-word {
   font-weight: 700;
+  font-size: 1.2rem;
   color: var(--accent);
 }
 

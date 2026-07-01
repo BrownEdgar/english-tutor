@@ -7,7 +7,7 @@ import { isLoggedIn } from '../shared/auth.js';
 
 const dataRoot = document.getElementById('grid');
 
-mountNav({ title: 'ТОП 500+ слов', backHref: 'index.html' });
+mountNav({ title: 'ТОП 1000+ слов', backHref: 'index.html' });
 initFilters();
 initAddWord();
 withDataLoader(dataRoot, loadWords).then(redraw);

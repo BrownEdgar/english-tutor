@@ -9,10 +9,13 @@ import {
 import { renderGrid } from './render.js';
 import { api } from '../shared/api.js';
 import { contentService } from '../shared/content-service.js';
-import { getToken } from '../shared/auth.js';
+import { getToken, isLoggedIn } from '../shared/auth.js';
 
 let learnedSet = loadSet('top500');
 let currentCat = 'all';
+let viewMode = 'cards';
+let sortField = 'en';
+let sortDir = 'asc';
 let words = [];
 let customWords = loadCustomWords();
 
@@ -42,6 +45,11 @@ export function redraw() {
     list: mergedList(),
     learnedSet,
     currentCat,
+    viewMode,
+    sortField,
+    sortDir,
+    isLoggedIn: isLoggedIn(),
+    onEdit: openEditPanel,
     async onLearnToggle(key) {
       const token = getToken();
       if (token) {
@@ -95,6 +103,58 @@ export function initFilters() {
   });
 
   document.getElementById('search').addEventListener('input', redraw);
+
+  document.querySelectorAll('.view-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      viewMode = btn.dataset.view;
+      document
+        .querySelectorAll('.view-btn')
+        .forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      redraw();
+    });
+  });
+
+  document.getElementById('word-table').tHead.addEventListener('click', (e) => {
+    const th = e.target.closest('th[data-sort]');
+    if (!th) return;
+    const field = th.dataset.sort;
+    if (sortField === field) {
+      sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortField = field;
+      sortDir = 'asc';
+    }
+    redraw();
+  });
+}
+
+let _editId = null;
+
+export function openEditPanel(word) {
+  const panel = document.getElementById('add-word-panel');
+  const form = document.getElementById('add-word-form');
+  const titleEl = panel?.querySelector('.add-word-title');
+  const submitBtn = form?.querySelector('[type="submit"] span');
+  const addBtn = document.getElementById('btn-add-word');
+  if (!panel || !form) return;
+
+  _editId = word.id ?? null;
+
+  form.querySelector('input[name="en"]').value = word.en || '';
+  form.querySelector('input[name="ipa"]').value = word.ipa || '';
+  form.querySelector('input[name="ru"]').value = word.ru || '';
+  form.querySelector('input[name="hy"]').value = word.hy || '';
+  form.querySelector('input[name="ex"]').value = word.ex || '';
+  form.querySelector('textarea[name="exhy"]').value = word.exhy || '';
+  const levelSelect = form.querySelector('select[name="level"]');
+  if (levelSelect) levelSelect.value = word.level || 'B1';
+
+  if (titleEl) titleEl.textContent = '✦ Редактировать слово';
+  if (submitBtn) submitBtn.textContent = 'Обновить';
+
+  panel.classList.add('open');
+  if (addBtn) addBtn.setAttribute('aria-expanded', 'true');
 }
 
 export function initAddWord() {
@@ -104,6 +164,8 @@ export function initAddWord() {
   if (!addBtn || !panel || !form) return;
 
   const closeBtn = document.getElementById('btn-close-panel');
+  const titleEl = panel.querySelector('.add-word-title');
+  const submitBtnSpan = form.querySelector('[type="submit"] span');
 
   function openPanel() {
     panel.classList.add('open');
@@ -112,10 +174,21 @@ export function initAddWord() {
   function closePanel() {
     panel.classList.remove('open');
     addBtn.setAttribute('aria-expanded', 'false');
+    _editId = null;
+    if (titleEl) titleEl.textContent = '✦ Новое слово';
+    if (submitBtnSpan) submitBtnSpan.textContent = 'Сохранить';
   }
 
   addBtn.addEventListener('click', () => {
-    panel.classList.contains('open') ? closePanel() : openPanel();
+    if (panel.classList.contains('open')) {
+      closePanel();
+    } else {
+      _editId = null;
+      if (titleEl) titleEl.textContent = '✦ Новое слово';
+      if (submitBtnSpan) submitBtnSpan.textContent = 'Сохранить';
+      form.reset();
+      openPanel();
+    }
   });
 
   if (closeBtn) closeBtn.addEventListener('click', closePanel);
@@ -128,6 +201,7 @@ export function initAddWord() {
   const enError = document.getElementById('en-error');
   if (enInput && enError) {
     enInput.addEventListener('blur', () => {
+      if (_editId) return;
       const val = enInput.value.trim();
       if (!val) {
         enError.textContent = '';
@@ -155,7 +229,12 @@ export function initAddWord() {
       level: String(fd.get('level') || 'B1').trim(),
     };
 
-    if (!entry.en || !entry.ru || !entry.ex) {
+    if (!entry.en) {
+      alert('Заполните поле English.');
+      return;
+    }
+
+    if (!_editId && (!entry.ru || !entry.ex)) {
       alert('Заполните поля: English, перевод, пример.');
       return;
     }
@@ -165,20 +244,29 @@ export function initAddWord() {
     if (submitBtn) submitBtn.disabled = true;
 
     try {
-      if (token) {
+      if (_editId) {
+        const updated = await api.patch(`/api/v1/words/${_editId}`, entry, token);
+        const idx = words.findIndex((w) => w.id === _editId);
+        if (idx !== -1) words[idx] = { ...words[idx], ...updated };
+        closePanel();
+        redraw();
+      } else if (token) {
         const created = await api.post('/api/v1/words', entry, token);
         customWords.push(created);
         saveCustomWords(customWords);
+        form.reset();
+        closePanel();
+        redraw();
       } else {
         customWords.push(entry);
         saveCustomWords(customWords);
+        form.reset();
+        closePanel();
+        redraw();
       }
-      form.reset();
-      closePanel();
-      redraw();
     } catch (err) {
       if (err.status === 409) {
-        enError.textContent = `Слово "${entry.en}" уже есть в базе данных.`;
+        if (enError) enError.textContent = `Слово "${entry.en}" уже есть в базе данных.`;
       } else {
         alert(`Ошибка: ${err.message}`);
       }
