@@ -55,7 +55,8 @@ function buildTable(customList) {
   const wrap = document.getElementById('sent-table-wrap');
   const allCount = SENTENCES.length + customList.length;
 
-  wrap.innerHTML = `
+  wrap.replaceChildren();
+  wrap.insertAdjacentHTML('beforeend', `
     <div class="sent-stats">
       <span>Всего: <strong>${allCount}</strong></span>
       ${customList.length ? `<span>· добавлено вами: <strong>${customList.length}</strong></span>` : ''}
@@ -76,33 +77,33 @@ function buildTable(customList) {
         <tbody id="sent-tbody"></tbody>
       </table>
     </div>
-  `;
+  `);
 
   const tbody = document.getElementById('sent-tbody');
 
   SENTENCES.forEach((item) => {
     const tr = document.createElement('tr');
     tr.className = 'sent-row';
-    tr.innerHTML = `
+    tr.insertAdjacentHTML('beforeend', `
       <td class="sent-num">${item.id}</td>
       <td class="sent-en">${applyHighlights(item.en, item.hl || [])}</td>
       <td class="sent-am">${item.am || ''}</td>
       <td></td>
-    `;
+    `);
     tbody.appendChild(tr);
   });
 
   customList.forEach((item, localIdx) => {
     const tr = document.createElement('tr');
     tr.className = 'sent-row sent-row--custom';
-    tr.innerHTML = `
+    tr.insertAdjacentHTML('beforeend', `
       <td class="sent-num">${item.id}</td>
       <td class="sent-en">${applyHighlights(item.en, item.hl || [])}</td>
       <td class="sent-am">${item.am || ''}</td>
       <td class="sent-del">
         <button class="sent-del-btn" data-idx="${localIdx}" aria-label="Удалить">✕</button>
       </td>
-    `;
+    `);
     tbody.appendChild(tr);
   });
 
@@ -134,9 +135,13 @@ function initForm() {
   function updatePreview() {
     const text = enInput.value.trim();
     const hls = parseHighlights(hlInput.value);
-    preview.innerHTML = text
-      ? applyHighlights(text, hls)
-      : '<span class="sent-preview-hint">Предварительный просмотр появится здесь…</span>';
+    preview.replaceChildren();
+    preview.insertAdjacentHTML(
+      'beforeend',
+      text
+        ? applyHighlights(text, hls)
+        : '<span class="sent-preview-hint">Предварительный просмотр появится здесь…</span>'
+    );
   }
 
   enInput.addEventListener('input', updatePreview);

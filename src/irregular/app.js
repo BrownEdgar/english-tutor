@@ -44,7 +44,7 @@ function renderRow(verb, globalIdx) {
   const tr = document.createElement('tr');
   tr.className = isLearned ? 'learned' : '';
   tr.dataset.verbId = verb.id;
-  tr.innerHTML = `
+  tr.insertAdjacentHTML('beforeend', `
     <td class="col-num">${globalIdx + 1}</td>
     <td class="col-v1"><strong>${verb.inf}</strong></td>
     <td class="col-v2">${verb.v2}</td>
@@ -57,7 +57,7 @@ function renderRow(verb, globalIdx) {
           <path d="M3 8l3.5 3.5L13 4.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
-    </td>`;
+    </td>`);
 
   const toggle = (verbId) => {
     if (learned.has(verbId)) learned.delete(verbId);
@@ -78,7 +78,7 @@ function renderRow(verb, globalIdx) {
 export function render() {
   const tbody = document.getElementById('verbs-body');
   if (!tbody) return;
-  tbody.innerHTML = '';
+  tbody.replaceChildren();
   const verbs = filtered();
   verbs.forEach((v) => {
     const globalIdx = IRREGULAR_VERBS.indexOf(v);

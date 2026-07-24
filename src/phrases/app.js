@@ -10,7 +10,8 @@ async function loadPhrases() {
 function buildTable() {
   const wrap = document.getElementById('ph-table-wrap');
 
-  wrap.innerHTML = `
+  wrap.replaceChildren();
+  wrap.insertAdjacentHTML('beforeend', `
     <div class="ph-stats">
       <span>Всего: <strong>${PHRASES.length}</strong></span>
     </div>
@@ -30,7 +31,7 @@ function buildTable() {
         <tbody id="ph-tbody"></tbody>
       </table>
     </div>
-  `;
+  `);
 
   const tbody = document.getElementById('ph-tbody');
 
@@ -38,7 +39,7 @@ function buildTable() {
     const tr = document.createElement('tr');
     tr.className = 'ph-row';
     tr.dataset.id = item.id;
-    tr.innerHTML = `
+    tr.insertAdjacentHTML('beforeend', `
       <td class="ph-num">${idx + 1}</td>
       <td class="ph-en">${escHtml(item.en)}</td>
       <td class="ph-hy">${escHtml(item.hy)}</td>
@@ -46,7 +47,7 @@ function buildTable() {
         <button class="ph-edit-btn" data-id="${item.id}" aria-label="Редактировать">✏️</button>
         <button class="ph-del-btn" data-id="${item.id}" aria-label="Удалить">✕</button>
       </td>
-    `;
+    `);
     tbody.appendChild(tr);
   });
 

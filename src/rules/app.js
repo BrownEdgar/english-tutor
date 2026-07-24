@@ -30,7 +30,7 @@ function buildCard(rule) {
     )
     .join('');
 
-  card.innerHTML = `
+  card.insertAdjacentHTML('beforeend', `
     <div class="rule-head">
       <span class="rule-tag" style="background:${rule.color}18;color:${rule.color};border:1px solid ${rule.color}40">${rule.tag}</span>
       <div>
@@ -44,7 +44,7 @@ function buildCard(rule) {
       ${rule.tip ? `<div class="tip-box"><strong>💡 Запомни:</strong><br>${rule.tip.replace(/\n/g, '<br>')}</div>` : ''}
       ${rule.exceptions ? `<div class="exceptions"><b>⚠ Исключения:</b> ${rule.exceptions}</div>` : ''}
       <button class="know-btn btn btn-ghost" data-rule-id="${rule.id}">${learned.has(rule.id) ? '✓ Уже знаю' : '✓ Знаю это правило'}</button>
-    </div>`;
+    </div>`);
 
   card
     .querySelector('.rule-head')
@@ -65,7 +65,7 @@ function buildCard(rule) {
 export function render() {
   const q = document.getElementById('search').value.toLowerCase();
   const container = document.getElementById('sections');
-  container.innerHTML = '';
+  container.replaceChildren();
 
   const rulesDiv = document.createElement('div');
   rulesDiv.className = 'rules-list';
@@ -92,7 +92,7 @@ export function render() {
   });
 
   if (count === 0) {
-    rulesDiv.innerHTML = '<div class="empty-state">Ничего не найдено</div>';
+    rulesDiv.insertAdjacentHTML('beforeend', '<div class="empty-state">Ничего не найдено</div>');
   }
 
   container.appendChild(rulesDiv);

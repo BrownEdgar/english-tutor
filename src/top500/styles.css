@@ -396,68 +396,151 @@
   }
 }
 
-.card-voice {
+.card-actions {
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 30px;
-  height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-voice {
+  position: static;
+  width: 26px;
+  height: 26px;
+  padding: 0;
   border-radius: 50%;
   border: 1px solid var(--border);
   background: var(--surface2);
+  color: var(--text-2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  transition: background var(--t);
+  font-size: 12px;
+  transition:
+    background var(--t),
+    color var(--t),
+    border-color var(--t);
 }
 
 .card-voice:hover {
   background: var(--accent-bg);
+  color: var(--accent);
 }
 
 .card-edit {
-  position: absolute;
-  top: 10px;
-  right: 46px;
-  width: 30px;
-  height: 30px;
+  position: static;
+  width: 26px;
+  height: 26px;
+  padding: 0;
   border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--surface2);
+  border: 1.5px solid var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  transition: background var(--t);
+  font-size: 12px;
+  transition:
+    background var(--t),
+    color var(--t),
+    transform 0.1s;
 }
 
 .card-edit:hover {
-  background: var(--accent-bg);
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-1px);
 }
 
-.col-edit {
-  width: 36px;
+.card-delete {
+  position: static;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1.5px solid #dc2626;
+  background: color-mix(in srgb, #dc2626 12%, transparent);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background var(--t),
+    transform 0.1s;
+}
+
+.card-delete img {
+  width: 12px;
+  height: 12px;
+  filter: invert(24%) sepia(89%) saturate(3272%) hue-rotate(340deg) brightness(92%) contrast(89%);
+}
+
+.card-delete:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
+
+.card-delete:hover img {
+  filter: brightness(0) invert(1);
+}
+
+.col-actions {
+  width: 80px;
   text-align: center;
   padding: 0 4px;
+  white-space: nowrap;
+}
+
+.word-table:not(.is-logged-in) .col-actions {
+  display: none;
+}
+
+.table-edit-btn,
+.table-delete-btn {
+  border-radius: var(--radius-sm);
+  color: white;
+  border: 1px solid grey;
+  cursor: pointer;
+  font-size: 14px;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
 }
 
 .table-edit-btn {
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  color: var(--text-2);
-  cursor: pointer;
-  font-size: 14px;
-  padding: 2px 6px;
-  transition: background var(--t);
+  background: #69777a;
+  margin-right: 4px;
 }
 
 .table-edit-btn:hover {
   background: var(--accent-bg);
   color: var(--accent);
+}
+
+.table-delete-btn {
+  background: #dc2626;
+}
+
+.table-delete-btn img {
+  width: 12px;
+  height: 12px;
+  filter: brightness(0) invert(1);
+}
+
+.table-delete-btn:hover {
+  background: color-mix(in srgb, #dc2626 15%, transparent);
+  color: #dc2626;
 }
 
 /* View toggle */
@@ -507,11 +590,12 @@
 
 .word-table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
-  font-size: 13px;
-  border: 2px solid #f3cc5a;
+  font-size: 14px;
+  border: 1px solid #5d5d5d;
   border-radius: 8px;
-  overflow: hidden;
+  overflow-x: auto;
 }
 
 .word-table th {
@@ -525,8 +609,6 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #fff;
-  border-bottom: 2px solid #eab308;
-  border-right: 1px solid color-mix(in srgb, #eab308 50%, transparent);
   white-space: nowrap;
   z-index: 2;
 }
@@ -537,8 +619,7 @@
 
 .word-table td {
   padding: 9px 12px;
-  border-bottom: 1px solid #eab308;
-  border-right: 1px solid color-mix(in srgb, #eab308 40%, transparent);
+  border: 1px solid #727272;
   vertical-align: top;
   line-height: 1.45;
 }
@@ -566,30 +647,105 @@
   text-align: center;
 }
 
+.col-en {
+  width: 14%;
+}
+
 .col-en strong {
   font-size: 15px;
   color: var(--text);
 }
 
 .col-ipa {
+  width: 5%;
   color: var(--text-3);
   font-family: 'JetBrains Mono', monospace;
-  white-space: nowrap;
 }
 
 .col-hy {
+  width: 20%;
   color: var(--text-2);
-  min-width: 120px;
+  overflow-wrap: break-word;
 }
 
-.col-ex {
+.col-example {
+  width: 61%;
   color: var(--text-2);
   font-style: italic;
-  min-width: 200px;
+  overflow-wrap: break-word;
 }
 
-.col-exhy {
+.col-example .example-line[lang='hy'] {
   color: var(--text-3);
-  font-style: italic;
-  min-width: 180px;
+}
+
+/* Confirm dialog */
+.confirm-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  border: none;
+  border-radius: var(--radius, 12px);
+  padding: 0;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  width: min(320px, calc(100vw - 32px));
+  height: fit-content;
+  text-align: center;
+}
+
+.confirm-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+.confirm-dialog-form {
+  padding: 22px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.confirm-dialog-message {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+  margin: 0;
+}
+
+.confirm-dialog-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.confirm-dialog-btn {
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background var(--t),
+    color var(--t),
+    border-color var(--t);
+}
+
+.confirm-dialog-btn--cancel:hover {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+.confirm-dialog-btn--confirm {
+  background: #dc2626;
+  border-color: #dc2626;
+  color: #fff;
+}
+
+.confirm-dialog-btn--confirm:hover {
+  background: color-mix(in srgb, #dc2626 85%, black);
 }

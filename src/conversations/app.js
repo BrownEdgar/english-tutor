@@ -62,7 +62,7 @@ function levelBadge(level) {
 function renderGrid() {
   const q = (document.getElementById('conv-search')?.value || '').toLowerCase();
   const grid = document.getElementById('conv-grid');
-  grid.innerHTML = '';
+  grid.replaceChildren();
 
   let visible = 0;
   CONVERSATIONS.forEach((conv) => {
@@ -79,7 +79,7 @@ function renderGrid() {
 
     const card = document.createElement('div');
     card.className = `conv-card${isPracticed ? ' practiced' : ''}`;
-    card.innerHTML = `
+    card.insertAdjacentHTML('beforeend', `
       <div class="conv-card-top">
         <span class="conv-icon">${conv.icon}</span>
         ${levelBadge(conv.level)}
@@ -90,13 +90,13 @@ function renderGrid() {
       <div class="conv-card-meta">
         <span class="conv-tip-label">💡 ${(conv.armenianTipLabel || '').replace(/🇦🇲 /, '')}</span>
       </div>
-    `;
+    `);
     card.addEventListener('click', () => openModal(conv.id));
     grid.appendChild(card);
   });
 
   if (visible === 0) {
-    grid.innerHTML = '<div class="empty-state">No conversations found</div>';
+    grid.insertAdjacentHTML('beforeend', '<div class="empty-state">No conversations found</div>');
   }
 
   updateStats();
@@ -120,14 +120,18 @@ async function openModal(id) {
   const inner = document.getElementById('conv-modal-inner');
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
-  inner.innerHTML =
-    '<div style="padding:2rem;text-align:center;opacity:.5">Loading…</div>';
+  inner.replaceChildren();
+  inner.insertAdjacentHTML(
+    'beforeend',
+    '<div style="padding:2rem;text-align:center;opacity:.5">Loading…</div>'
+  );
 
   let conv;
   try {
     conv = await contentService.fetchConversation(id);
   } catch (err) {
-    inner.innerHTML = `<div style="padding:2rem;color:red">Error: ${err.message}</div>`;
+    inner.replaceChildren();
+    inner.insertAdjacentHTML('beforeend', `<div style="padding:2rem;color:red">Error: ${err.message}</div>`);
     return;
   }
 
@@ -179,7 +183,8 @@ async function openModal(id) {
       </div>`
     : '';
 
-  inner.innerHTML = `
+  inner.replaceChildren();
+  inner.insertAdjacentHTML('beforeend', `
     <div class="conv-modal-header">
       <div class="conv-modal-title-row">
         <span class="conv-modal-icon">${conv.icon}</span>
@@ -224,7 +229,7 @@ async function openModal(id) {
         <button class="btn btn-primary" id="btn-next-line">Next Line →</button>
       </div>
     </div>
-  `;
+  `);
 
   inner.querySelectorAll('.conv-tts-btn').forEach((btn) => {
     btn.addEventListener('click', (e) => {
@@ -297,13 +302,14 @@ function renderPracticeLine(lines) {
   const progress = document.getElementById('practice-progress');
 
   progress.textContent = `Line ${practiceLineIndex + 1} of ${lines.length}`;
-  container.innerHTML = `
+  container.replaceChildren();
+  container.insertAdjacentHTML('beforeend', `
     <div class="practice-line-card conv-line-${line.role}">
       <div class="practice-speaker">${line.name}</div>
       <div class="practice-text">${line.text}</div>
       <div class="practice-hy">${line.hy || ''}</div>
     </div>
-  `;
+  `);
   speak(line.text);
 }
 

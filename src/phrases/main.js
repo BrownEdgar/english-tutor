@@ -12,7 +12,7 @@ themeBtn.textContent = '🌙';
 
 const nav = document.createElement('nav');
 nav.className = 'home-nav';
-nav.innerHTML = '<a class="home-nav-logo" href="/">EN ✦</a>';
+nav.insertAdjacentHTML('beforeend', '<a class="home-nav-logo" href="/">EN ✦</a>');
 nav.appendChild(themeBtn);
 document.body.prepend(nav);
 

@@ -17,13 +17,13 @@ export function showDataLoader(target, label = 'Загрузка…') {
   el.setAttribute('role', 'status');
   el.setAttribute('aria-live', 'polite');
   el.setAttribute('aria-busy', 'true');
-  el.innerHTML = `
+  el.insertAdjacentHTML('beforeend', `
     <div class="data-loader-visual" aria-hidden="true">
       <span class="data-loader-ring"></span>
       <span class="data-loader-ring data-loader-ring--inner"></span>
     </div>
     <span class="data-loader-label">${label}</span>
-  `;
+  `);
   container.appendChild(el);
 }
 

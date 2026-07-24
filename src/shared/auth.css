@@ -33,6 +33,29 @@
   padding: 32px 28px 28px;
   border-top: 3px solid var(--accent);
 }
+
+.login-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 1;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--t), color var(--t);
+}
+.login-modal-close:hover {
+  background: var(--surface2);
+  color: var(--text);
+}
 .login-overlay.visible .login-modal {
   transform: translateX(-50%) translateY(0);
 }

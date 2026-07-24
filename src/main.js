@@ -41,7 +41,7 @@ const APPS = [
   {
     id: 'top500',
     href: 'top500.html',
-    title: 'Top 500+ Words',
+    title: 'Top 1000+ Words',
     subtitle: 'IPA phonetics · TTS · Add your own',
     icon: '🔊',
     total: 871,
@@ -80,7 +80,7 @@ const APPS = [
 
 function renderCards() {
   const grid = document.getElementById('apps-grid');
-  grid.innerHTML = '';
+  grid.replaceChildren();
 
   APPS.forEach((app) => {
     const { learned, total } = getProgress(app.id, app.total);
@@ -90,7 +90,7 @@ function renderCards() {
     card.className = 'app-card';
     card.href = app.href;
     card.style.setProperty('--card-color', app.color);
-    card.innerHTML = `
+    card.insertAdjacentHTML('beforeend', `
       <div class="app-card-icon">${app.icon}</div>
       <div class="app-card-body">
         <div class="app-card-title">${app.title}</div>
@@ -106,7 +106,7 @@ function renderCards() {
       <svg class="app-card-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M6 3l5 5-5 5"/>
       </svg>
-    `;
+    `);
     grid.appendChild(card);
   });
 }

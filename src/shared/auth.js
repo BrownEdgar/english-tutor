@@ -45,8 +45,9 @@ function createModal() {
   overlay.setAttribute('role', 'dialog');
   overlay.setAttribute('aria-modal', 'true');
   overlay.setAttribute('aria-label', 'Вход');
-  overlay.innerHTML = `
+  overlay.insertAdjacentHTML('beforeend', `
     <div class="login-modal">
+      <button type="button" class="login-modal-close" id="login-close" aria-label="Закрыть">✕</button>
       <div class="login-modal-logo">🔐</div>
       <div class="login-modal-title">Вход</div>
       <div class="login-modal-sub">Только для администратора</div>
@@ -64,7 +65,7 @@ function createModal() {
         <button type="button" class="login-btn-cancel" id="login-cancel">Отмена</button>
       </form>
     </div>
-  `;
+  `);
   document.body.appendChild(overlay);
 
   overlay.querySelector('#login-form').addEventListener('submit', async (e) => {
@@ -92,10 +93,7 @@ function createModal() {
   });
 
   overlay.querySelector('#login-cancel').addEventListener('click', closeModal);
-
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) closeModal();
-  });
+  overlay.querySelector('#login-close').addEventListener('click', closeModal);
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && overlay.classList.contains('visible'))
@@ -125,12 +123,13 @@ export function createAuthButton() {
   btn.type = 'button';
 
   function update() {
+    btn.replaceChildren();
     if (isLoggedIn()) {
       btn.classList.add('logged-in');
-      btn.innerHTML = `<span>✓</span> Выйти`;
+      btn.insertAdjacentHTML('beforeend', `<span>✓</span> Выйти`);
     } else {
       btn.classList.remove('logged-in');
-      btn.innerHTML = `Войти`;
+      btn.insertAdjacentHTML('beforeend', `Войти`);
     }
   }
 

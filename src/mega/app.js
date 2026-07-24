@@ -85,7 +85,7 @@ function renderCard(item) {
     inner += `<div class="ex-block ${cls}">${item.ex}</div>`;
   }
 
-  card.innerHTML = inner;
+  card.insertAdjacentHTML('beforeend', inner);
   card.onclick = () => {
     if (learned.has(item.id)) learned.delete(item.id);
     else learned.add(item.id);
@@ -97,7 +97,7 @@ function renderCard(item) {
 
 export function render() {
   const grid = document.getElementById('grid');
-  grid.innerHTML = '';
+  grid.replaceChildren();
   let shown = 0;
   DATA.forEach((item) => {
     if (!matches(item)) return;

@@ -247,7 +247,10 @@ export function initAddWord() {
       if (_editId) {
         const updated = await api.patch(`/api/v1/words/${_editId}`, entry, token);
         const idx = words.findIndex((w) => w.id === _editId);
-        if (idx !== -1) words[idx] = { ...words[idx], ...updated };
+        if (idx !== -1) words[idx] = {
+          ...words[idx],
+          ...updated,
+        };
         closePanel();
         redraw();
       } else if (token) {

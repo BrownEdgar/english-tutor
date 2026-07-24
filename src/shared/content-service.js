@@ -84,10 +84,10 @@ export class ContentService {
 
   /**
    * Top 500 words; merges server custom words when authenticated.
-   * @param {number} [limit=1000]
+   * @param {number} [limit=1200]
    * @returns {Promise<{ words: unknown[]; customWords: unknown[] }>}
    */
-  async fetchWords(limit = 1000) {
+  async fetchWords(limit = 1200) {
     const token = getToken();
     try {
       const res = await api.get(

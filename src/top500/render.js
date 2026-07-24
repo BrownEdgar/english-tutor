@@ -1,5 +1,6 @@
 import { escapeHtml, stableKey } from './utils.js';
 import { speakCard } from './speech.js';
+import { confirmDialog } from './confirmDialog.js';
 
 /** Armenian gloss + Russian, e.g. `թարմացնել / обновить` */
 function translationMarkup(w) {
@@ -31,12 +32,18 @@ function cardInnerMarkup(w, isLoggedIn) {
   const editBtn = isLoggedIn
     ? '<button type="button" class="card-edit" title="Редактировать" aria-label="Редактировать слово">✎</button>'
     : '';
+  const deleteBtn = isLoggedIn
+    ? '<button type="button" class="card-delete" title="Удалить" aria-label="Удалить слово"><img src="/trash.svg" alt="" width="12" height="12"></button>'
+    : '';
 
   return [
+    '<div class="card-actions">',
     '<button type="button" class="card-voice" title="Прослушать" aria-label="Прослушать пример">',
     '<span class="card-voice-icon" aria-hidden="true">&#128266;</span>',
     '</button>',
     editBtn,
+    deleteBtn,
+    '</div>',
     `<span class="top-tag ${tagClass}">${tagLabel}</span>`,
     '<div class="word-row">',
     `<span class="word-en">${escapeHtml(w.en)}</span>`,
@@ -66,9 +73,8 @@ function shouldShowCard(w, currentCat) {
 const TH_LABELS = {
   en: 'English',
   ipa: 'IPA',
-  hy: 'Հայerен/русский',
+  hy: 'Հայերեն/русский',
   ex: 'Example',
-  exhy: 'Հայerен թargmanutyun',
 };
 
 function updateSortHeaders(sortField, sortDir) {
@@ -89,10 +95,17 @@ function sortList(list, sortField, sortDir) {
   });
 }
 
-function renderTable({ list, learnedSet, currentCat, sortField, sortDir, isLoggedIn, onEdit }) {
-  const query = document.getElementById('search').value.trim().toLowerCase();
+function renderTable({ list, learnedSet, currentCat, sortField, sortDir, isLoggedIn, onEdit, onDelete }) {
+  const searchInput = document.getElementById('search');
+  const table = document.getElementById('word-table');
   const tbody = document.getElementById('word-table-body');
+  const learnedCountEl = document.getElementById('learned-count');
+  const totalCountEl = document.getElementById('total-count');
+  const progressEl = document.getElementById('progress');
+
+  const query = searchInput.value.trim().toLowerCase();
   tbody.replaceChildren();
+  table.classList.toggle('is-logged-in', isLoggedIn);
 
   updateSortHeaders(sortField, sortDir);
 
@@ -104,42 +117,58 @@ function renderTable({ list, learnedSet, currentCat, sortField, sortDir, isLogge
 
   const sorted = sortList(filtered, sortField, sortDir);
 
+  const actionsCell = isLoggedIn
+    ? '<td class="col-actions"><button class="table-edit-btn" title="Редактировать">✎</button><button class="table-delete-btn" title="Удалить"><img src="/trash.svg" alt="" width="12" height="12"></button></td>'
+    : '';
+
   sorted.forEach((w, idx) => {
     const key = stableKey(w);
-    const learned = learnedSet.has(key);
     const tr = document.createElement('tr');
-    if (learned) tr.classList.add('row-learned');
-    const editCell = isLoggedIn
-      ? `<td class="col-edit"><button class="table-edit-btn" title="Редактировать">✎</button></td>`
-      : '<td class="col-edit"></td>';
-    tr.innerHTML = [
-      `<td class="col-num">${idx + 1}</td>`,
-      `<td class="col-en"><strong>${escapeHtml(w.en)}</strong></td>`,
-      `<td class="col-ipa"><span class="word-ipa">${escapeHtml(w.ipa || '')}</span></td>`,
-      `<td class="col-hy" lang="hy">${escapeHtml(w.hy || w.ru || '')}</td>`,
-      `<td class="col-ex" lang="en">${escapeHtml(w.ex || '')}</td>`,
-      `<td class="col-exhy" lang="hy">${escapeHtml(w.exhy || '')}</td>`,
-      editCell,
-    ].join('');
-    if (isLoggedIn && onEdit) {
-      tr.querySelector('.table-edit-btn').addEventListener('click', (e) => {
+    if (learnedSet.has(key)) tr.classList.add('row-learned');
+    tr.insertAdjacentHTML(
+      'beforeend',
+      [
+        `<td class="col-num">${idx + 1}</td>`,
+        `<td class="col-en"><strong>${escapeHtml(w.en)}</strong></td>`,
+        `<td class="col-ipa"><span class="word-ipa">${escapeHtml(w.ipa || '')}</span></td>`,
+        `<td class="col-hy" lang="hy">${escapeHtml(w.hy || w.ru || '')}</td>`,
+        `<td class="col-example" colspan="2">${exampleMarkup(w)}</td>`,
+        actionsCell,
+      ].join('')
+    );
+
+    const deleteBtn = tr.querySelector('.table-delete-btn');
+    const editBtn = tr.querySelector('.table-edit-btn');
+
+    if (deleteBtn && onDelete) {
+      deleteBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        if (await confirmDialog(`Удалить слово "${w.en}"?`)) onDelete(w.id);
+      });
+    }
+    if (editBtn && onEdit) {
+      editBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         onEdit(w);
       });
     }
     tbody.appendChild(tr);
   });
-  document.getElementById('learned-count').textContent = String(learnedSet.size);
-  document.getElementById('total-count').textContent = String(list.length);
-  const pct = list.length ? ((learnedSet.size / list.length) * 100).toFixed(0) : '0';
-  document.getElementById('progress').style.width = `${pct}%`;
+
+  learnedCountEl.textContent = String(learnedSet.size);
+  totalCountEl.textContent = String(list.length);
+  progressEl.style.width = list.length ? `${((learnedSet.size / list.length) * 100).toFixed(0)}%` : '0%';
 }
 
 export function renderGrid({ list, learnedSet, currentCat, onLearnToggle, onDelete, viewMode, sortField, sortDir, isLoggedIn, onEdit }) {
-  const query = document.getElementById('search').value.trim().toLowerCase();
-
+  const searchInput = document.getElementById('search');
   const grid = document.getElementById('grid');
   const tableWrap = document.getElementById('word-table-wrap');
+  const learnedCountEl = document.getElementById('learned-count');
+  const totalCountEl = document.getElementById('total-count');
+  const progressEl = document.getElementById('progress');
+
+  const query = searchInput.value.trim().toLowerCase();
 
   if (viewMode === 'table') {
     grid.hidden = true;
@@ -152,6 +181,7 @@ export function renderGrid({ list, learnedSet, currentCat, onLearnToggle, onDele
       sortDir,
       isLoggedIn,
       onEdit,
+      onDelete,
     });
     return;
   }
@@ -169,12 +199,20 @@ export function renderGrid({ list, learnedSet, currentCat, onLearnToggle, onDele
     card.className = `card top-card${learnedSet.has(key) ? ' learned' : ''}`;
     card.insertAdjacentHTML('beforeend', cardInnerMarkup(w, isLoggedIn));
 
-    card.querySelector('.card-voice').addEventListener('click', (e) => {
+    const voiceBtn = card.querySelector('.card-voice');
+    const deleteBtn = card.querySelector('.card-delete');
+    const editBtn = card.querySelector('.card-edit');
+
+    voiceBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       speakCard(w);
     });
-
-    const editBtn = card.querySelector('.card-edit');
+    if (deleteBtn && onDelete) {
+      deleteBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        if (await confirmDialog(`Удалить слово "${w.en}"?`)) onDelete(w.id);
+      });
+    }
     if (editBtn && onEdit) {
       editBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -194,12 +232,7 @@ export function renderGrid({ list, learnedSet, currentCat, onLearnToggle, onDele
     grid.appendChild(card);
   });
 
-  document.getElementById('learned-count').textContent = String(
-    learnedSet.size
-  );
-  document.getElementById('total-count').textContent = String(list.length);
-  const pct = list.length
-    ? ((learnedSet.size / list.length) * 100).toFixed(0)
-    : '0';
-  document.getElementById('progress').style.width = `${pct}%`;
+  learnedCountEl.textContent = String(learnedSet.size);
+  totalCountEl.textContent = String(list.length);
+  progressEl.style.width = list.length ? `${((learnedSet.size / list.length) * 100).toFixed(0)}%` : '0%';
 }

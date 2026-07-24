@@ -173,7 +173,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: "I'm all ears.",
-    hy: 'Ամem dum em:',
+    hy: 'Ես ուշադիր լսում եմ:',
     level: 'B1',
     tip: 'Means "I\'m listening completely / tell me everything." Great for showing engagement.',
     armenianNote:
@@ -181,7 +181,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: 'How do you spell that?',
-    hy: 'Aysm inchpecs e kgrvum?',
+    hy: 'Ինչպե՞ս է գրվում դա:',
     level: 'A1',
     tip: "Essential survival phrase. Use it anytime you don't know how a word is written.",
     armenianNote:
@@ -189,7 +189,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: "I didn't catch that. Could you repeat, please?",
-    hy: 'Ches lsel: Kkay krakneln, khndrem?',
+    hy: 'Ես չեմ հասկանում. Կարող եք կրկնել, խնդրում եմ?',
     level: 'A1',
     tip: '"I didn\'t catch that" is softer than "I didn\'t understand" — implies it\'s about hearing, not intelligence.',
     armenianNote:
@@ -197,7 +197,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: 'Bear with me for a moment.',
-    hy: 'Dime varig hambervatsel indzh het:',
+    hy: 'Խնդրում եմ ստիպել ինձ մի պահ:',
     level: 'B2',
     tip: '"Bear with me" = please be patient with me. Common in presentations and phone calls.',
     armenianNote:
@@ -205,7 +205,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: "It's not rocket science.",
-    hy: "Ays parzel ch' e:",
+    hy: 'Դա այդքան էլ դժվար չէ:',
     level: 'B2',
     tip: 'Means something is not complicated. Sarcastic tone if said slowly.',
     armenianNote:
@@ -213,7 +213,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: 'He has a point.',
-    hy: 'Irеn imasal bar ка:',
+    hy: 'Նա ինչ-որ բանում ճիշտ է:',
     level: 'B1',
     tip: 'Means someone made a valid argument. "She has a point" — notice the article "a".',
     armenianNote:
@@ -221,7 +221,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: "I've been meaning to ask you something.",
-    hy: 'Yerkar zhamanakits im uzum er kets mi ban harc tayl:',
+    hy: 'Ես ուզում էի քեզ մի բան հարցնել:',
     level: 'B1',
     tip: '"Been meaning to" = intended to, but haven\'t done it yet. Shows it was on your mind.',
     armenianNote:
@@ -229,7 +229,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: 'The ball is in your court.',
-    hy: 'Hima dzer sharzhe:',
+    hy: 'Գնդակը քո դաշտում է:',
     level: 'C1',
     tip: "From tennis — it's your turn to act or make a decision.",
     armenianNote:
@@ -237,7 +237,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: "I'm swamped at the moment.",
-    hy: 'Ayst pake shad ashkhatum em:',
+    hy: 'Ես հիմա շատ զբաղված եմ:',
     level: 'B2',
     tip: '"Swamped" = very busy, overwhelmed with work. More vivid than "I\'m busy".',
     armenianNote:
@@ -245,7 +245,7 @@ export const DAILY_PHRASES = [
   },
   {
     en: 'That rings a bell.',
-    hy: 'Ays kich tanich e indzh hamar:',
+    hy: 'Դա ինձ հիշեցնում է ինչ-որ բան: Դա ինձ ծանոթ է:',
     level: 'B2',
     tip: 'Means something vaguely reminds you of something you know.',
     armenianNote:
